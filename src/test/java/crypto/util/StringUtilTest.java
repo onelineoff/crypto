@@ -1,4 +1,4 @@
-package davidweiss.crypto.util;
+package crypto.util;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package davidweiss.crypto.util;
+package crypto.util;
 
 import java.io.File;
 import java.util.HashSet;

@@ -1,4 +1,4 @@
-package davidweiss.crypto.decrypt;
+package crypto.decrypt;
 
 public interface DecryptText
 {

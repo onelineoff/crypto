@@ -1,4 +1,4 @@
-package davidweiss.crypto.util;
+package crypto.util;
 
 import java.io.BufferedReader;
 import java.io.File;

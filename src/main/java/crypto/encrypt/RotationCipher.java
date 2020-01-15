@@ -1,7 +1,7 @@
-package davidweiss.crypto.encrypt;
+package crypto.encrypt;
 
-import davidweiss.crypto.util.RandomUtil;
-import davidweiss.crypto.util.StringUtil;
+import crypto.util.RandomUtil;
+import crypto.util.StringUtil;
 
 public class RotationCipher implements EncryptText
 {

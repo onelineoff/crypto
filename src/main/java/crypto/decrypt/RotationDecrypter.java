@@ -1,9 +1,9 @@
-package davidweiss.crypto.decrypt;
+package crypto.decrypt;
 
 import java.util.Set;
 
-import davidweiss.crypto.util.DictionaryUtil;
-import davidweiss.crypto.util.StringUtil;
+import crypto.util.DictionaryUtil;
+import crypto.util.StringUtil;
 
 
 public class RotationDecrypter implements DecryptText

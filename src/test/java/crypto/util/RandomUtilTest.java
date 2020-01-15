@@ -1,4 +1,4 @@
-package davidweiss.crypto.util;
+package crypto.util;
 
 import java.util.Arrays;
 

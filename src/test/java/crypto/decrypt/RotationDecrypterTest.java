@@ -1,9 +1,9 @@
-package davidweiss.crypto.decrypt;
+package crypto.decrypt;
 
 import org.junit.Test;
 
-import davidweiss.crypto.encrypt.RotationCipher;
-import davidweiss.crypto.util.PlainTextUtil;
+import crypto.encrypt.RotationCipher;
+import crypto.util.PlainTextUtil;
 
 public class RotationDecrypterTest
 {

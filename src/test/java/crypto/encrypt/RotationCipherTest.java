@@ -1,13 +1,12 @@
-package davidweiss.crypto.encrypt;
+package crypto.encrypt;
 
 import java.util.Arrays;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
-import davidweiss.crypto.util.PlainTextUtil;
-import davidweiss.crypto.util.RandomUtil;
+import crypto.util.PlainTextUtil;
+import crypto.util.RandomUtil;
 
 public class RotationCipherTest
 {

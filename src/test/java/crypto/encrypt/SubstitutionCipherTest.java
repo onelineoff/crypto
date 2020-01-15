@@ -1,4 +1,4 @@
-package davidweiss.crypto.encrypt;
+package crypto.encrypt;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import davidweiss.crypto.util.PlainTextUtil;
+import crypto.util.PlainTextUtil;
 
 public class SubstitutionCipherTest
 {
