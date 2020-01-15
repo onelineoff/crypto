@@ -7,10 +7,12 @@ import crypto.util.PlainTextUtil;
 
 public class RotationDecrypterTest
 {
+	private PlainTextUtil plainTextUtil = new PlainTextUtil();
+	
 	@Test
 	public void testRotationDecryption()
 	{
-		String text = PlainTextUtil.getSomePlainText();
+		String text = plainTextUtil.getSomePlainText();
 		RotationCipher cipher = new RotationCipher();
 		String encrypted = cipher.encrypt(text);
 		

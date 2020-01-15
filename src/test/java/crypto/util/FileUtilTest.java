@@ -19,4 +19,12 @@ public class FileUtilTest
 		Assert.assertTrue(lines.size() > 0);
 		System.out.println("Found " + lines.size() + " lines");
 	}
+	
+	@Test
+	public void testGetAsResource() 
+	{
+		FileUtil fileUtil = new FileUtil();
+		
+		fileUtil.getListFromResource("letters.txt");
+	}
 }

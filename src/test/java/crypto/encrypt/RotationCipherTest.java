@@ -9,10 +9,12 @@ import crypto.util.PlainTextUtil;
 
 public class RotationCipherTest
 {
+	private PlainTextUtil plainTextUtil = new PlainTextUtil();
+	
 	@Test
 	public void testEncrypt()
 	{
-		String text = PlainTextUtil.getSomePlainText();
+		String text = plainTextUtil.getSomePlainText();
 		RotationCipher cipher = new RotationCipher();
 		String encryptedText = cipher.encrypt(text);
 		
