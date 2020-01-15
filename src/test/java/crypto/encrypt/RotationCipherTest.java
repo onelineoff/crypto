@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import crypto.util.PlainTextUtil;
-import crypto.util.RandomUtil;
 
 public class RotationCipherTest
 {
