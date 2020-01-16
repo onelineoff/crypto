@@ -4,11 +4,13 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
+/** A utility class for performing random operations on text.
+ */
 public class RandomUtil
 {
-	private static SecureRandom sr;
+	private SecureRandom sr;
 	
-	static
+	public RandomUtil()
 	{
 		sr = new SecureRandom();
 	}
@@ -18,7 +20,7 @@ public class RandomUtil
 	 * @param input
 	 * @return The same characters, but in a random order.
 	 */
-	public static char[] scramble(char[] input)
+	public char[] scramble(char[] input)
 	{
 		// Make sure the input contains something
 		if (input == null)
@@ -50,10 +52,23 @@ public class RandomUtil
 		return outputArr;
 	}
 	
-	
-	
-	public static int getInt(int upperBound)
+	/** Get an integer between 1 and one less than the upper bound.
+	 * 
+	 * @param upperBound One higher than the maximum integer to be returned.
+	 * @return A random integer between 1 and (upperBound - 1).
+	 */
+	public int getInt(int upperBound)
 	{
-		return sr.nextInt(upperBound);
+		if (upperBound <= 2)
+			return 1;
+		
+		int val = 0;
+		
+		// The nextInt() call for SecureRandom does not allow a lower bound to
+		// be specified, so just call until a number other than 0 is returned.
+		while (val == 0)
+			val = sr.nextInt(upperBound);
+		
+		return val;
 	}
 }

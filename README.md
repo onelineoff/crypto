@@ -35,9 +35,18 @@ Using the above information, the number of possibilities becomes much smaller, a
 Stegnography is the science of hiding information where it is not plainly visible.  Although not stegnography per se, QR codes are a well-defined example of this.  A QR code can encode several thousand characters worth of data. Information can be hidden from the average person, but can be easily viewed by anyone who decodes the image, often with an app on a phone or tablet.
 
 # Issues
-1. Add Spring/autowiring.  Remove all static references.
 2. More comments.  Test javadoc.
 3. Add pom.xml. 
-4. Test Eclipse install from scratch from maven file.
-5. Test mvn clean install.
-6. Test mvn javadoc
+3. Evaluate whether other third party libraries, such as Apache Commons, should be used to replace some of this code.
+4. Additional unit tests.
+5. Implement decrypter for substitution cipher.
+6. Test Eclipse install from scratch from maven file.
+7. Test mvn clean install.
+8. Test mvn javadoc.
+
+# Caveats
+
+This is demonstration code, not meant to be useful in any practical way.  As a consequence, there are certain techniques that are not used here, such as using IoC/Spring.  This is intentional, to make the code as  easy to understand as possible.
+
+Also, some type of logging library, such as log4j or slf4j, would normally be used.  System.out.println() is used for simplicity.
+

@@ -11,18 +11,27 @@ import crypto.util.StringUtil;
  *  
  *  Preserve case, so if 'a' maps to 'l', 'A' will also map to 'L'.
  *  
- * @author dweiss
+ *  Note that this is <b>MUCH</b> harder to solve through brute force
+ *  than the Rotation Cipher, about 25! possibilities.
  *
  */
 public class SubstitutionCipher implements EncryptText
 {
-
+	private RandomUtil randomUtil;
+	private StringUtil stringUtil;
+	
+	public SubstitutionCipher()
+	{
+		randomUtil = new RandomUtil();
+		stringUtil = new StringUtil();
+	}
+	
 	@Override
 	public String encrypt(String plainText)
 	{
 		// First, get the map of scrambled letters, both lower and upper case.
-		char[] lowercase = StringUtil.getLowerCaseLetters();
-		char[] lowerCaseScrambled = RandomUtil.scramble(lowercase);
+		char[] lowercase = stringUtil.getLowerCaseLetters();
+		char[] lowerCaseScrambled = randomUtil.scramble(lowercase);
 		char[] upperCaseScrambled = new String(lowerCaseScrambled).toUpperCase().toCharArray();
 		
 		
@@ -33,6 +42,7 @@ public class SubstitutionCipher implements EncryptText
 		int lowerStartIndex = (int) 'a';
 		int upperStartIndex = (int) 'A';
 		
+		// Perform the substitution from the plain text to the encrypted character array.
 		for (int i=0; i<length; i++)
 		{
 			char c = plainTextArr[i];

@@ -83,7 +83,9 @@ public class RotationCipherTest
 	
 	private boolean testIsRotated(char[] input)
 	{
-		char[] output = RotationCipher.rotate(input);
+		RotationCipher rotationCipher = new RotationCipher();
+		
+		char[] output = rotationCipher.rotate(input);
 		if (input == null)
 			return (output == null);
 		else if (input.length == 0)

@@ -1,14 +1,18 @@
 package crypto.decrypt;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import crypto.util.FileUtil;
 
-public class SubstitutionDecrypter implements DecryptText
+public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptText
 {
 	private FileUtil fileUtil = new FileUtil();
+	
+	public SubstitutionDecrypter()
+	{
+		super();
+	}
 	
 	@Override
 	public String decryptText(String encryptedText)

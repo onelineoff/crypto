@@ -7,9 +7,26 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Assorted methods for accessing files.
+ *  Usually, this would not be explicitly coded, but a third party library,
+ *  such as Apache Commons, would be used instead.
+ *
+ */
 public class FileUtil
 {
-	public static List<String> getLines(File f)
+	private StringUtil stringUtil;
+	
+	public FileUtil() 
+	{
+		stringUtil = new StringUtil();
+	}
+	
+	/** Return the contents of the text file as a list of lines.
+	 * 
+	 * @param f The text file to be read.
+	 * @return A list of lines.
+	 */
+	public List<String> getLines(File f)
 	{
 		ArrayList<String> lines = new ArrayList<String>();
 		
@@ -38,25 +55,25 @@ public class FileUtil
 		return lines;
 	}
 	
+	/** Get the list of lines from a resource file.
+	 *  Generally, this file resides in src/main/resources, or src/test/resources.
+	 * @param fname The file to be read.
+	 * @return A list of lines.
+	 */
 	public List<String> getListFromResource(String fname) {
 		String fullFname = getClass().getClassLoader().getResource(fname).getFile();
 		return getLines(new File(fullFname));
 		
 	}
 	
+	/** Get the contents of a resource file as a single string.
+	 * 
+	 * @param fname The resource file to be read.
+	 * @return The contents of the file as a single concatenated string.
+	 */
 	public String getStringFromResource(String fname)
 	{
-		return getStringFromList(getListFromResource(fname));
+		return stringUtil.getStringFromList(getListFromResource(fname));
 	}
 	
-	public String getStringFromList(List<String> list) 
-	{
-		StringBuffer sb = new StringBuffer();
-		for (String s : list)
-		{
-			sb.append(s);
-		}
-		
-		return sb.toString();
-	}
 }

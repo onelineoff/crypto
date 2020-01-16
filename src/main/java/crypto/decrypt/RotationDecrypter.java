@@ -1,14 +1,13 @@
 package crypto.decrypt;
 
-import java.util.Set;
-
-import crypto.util.DictionaryUtil;
-import crypto.util.StringUtil;
-
-
-public class RotationDecrypter implements DecryptText
+public class RotationDecrypter extends BaseTextDecrypter implements DecryptText
 {
-	private Set<String> dictionaryWords = null;
+	
+	public RotationDecrypter() 
+	{
+		super();
+	}
+	
 	
 	@Override
 	public String decryptText(String encryptedText)
@@ -36,8 +35,8 @@ public class RotationDecrypter implements DecryptText
 		int lowerStartIndex = (int) 'a';
 		int upperStartIndex = (int) 'A';
 		
-		char[] lowerCase = StringUtil.getLowerCaseLetters();
-		char[] upperCase = StringUtil.getUpperCaseLetters();
+		char[] lowerCase = stringUtil.getLowerCaseLetters();
+		char[] upperCase = stringUtil.getUpperCaseLetters();
 		
 		char[] rotatedLowerCase = new char[26];
 		char[] rotatedUpperCase = new char[26];
@@ -67,29 +66,5 @@ public class RotationDecrypter implements DecryptText
 		return new String(charArray);
 	}
 	
-	private int getMatchCount(String text)
-	{
-		if (dictionaryWords == null)
-			dictionaryWords = DictionaryUtil.getWords();
-		
-		int count = 0;
-		
-		String[] words = getWords(text);
-		for (String word : words)
-		{
-			word = word.toLowerCase();
-			if (dictionaryWords.contains(word))
-				count++;
-		}
-		
-		return count;
-		
-	}
-	
-	private String[] getWords(String text)
-	{
-		String[] words = text.split(" ");
-		return words;
-	}
 
 }
