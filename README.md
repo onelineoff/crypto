@@ -41,8 +41,9 @@ Stegnography is the science of hiding information where it is not plainly visibl
 4. Additional unit tests.
 5. Implement decrypter for substitution cipher.
 6. Test Eclipse install from scratch from maven file.
-7. Test mvn clean install.
-8. Test mvn javadoc.
+7. Some methods in StringUtil should be in DictionaryUtil
+8. Test mvn clean install.
+9. Test mvn javadoc.
 
 # Caveats
 

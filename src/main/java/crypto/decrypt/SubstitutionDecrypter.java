@@ -17,30 +17,15 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 	@Override
 	public String decryptText(String encryptedText)
 	{
+		List<Character> frequentCharList = stringUtil.getMostFrequentCharacters();
+		List<String> frequentWordList = stringUtil.getMostFrequentWords();
+		List<String> frequentBigramList = stringUtil.getMostFrequentBigrams();
+		
 		// Use frequency analysis of letters.
-		// Use list of 80 most common words
+		// Use list of most common words
 		// Use most common bigrams.
 		// Frequency of first letter of a word differs from overall frequency of letters.
+		
 		return null;
 	}
-	
-	public List<String> getMostCommonCharacters() 
-	{
-		String[] sarr = fileUtil.getListFromResource("letters.txt").get(0).split(",");
-		List<String> list = Arrays.asList(sarr);
-		return list;
-	}
-	
-	public List<String> getMostCommonWords() 
-	{
-		return fileUtil.getListFromResource("words.txt");
-	}
-	
-	public List<String> getMostCommonBigrams() 
-	{
-		String[] sarr = fileUtil.getListFromResource("bigrams.txt").get(0).split(",");
-		List<String> list = Arrays.asList(sarr);
-		return list;
-	}
-
 }

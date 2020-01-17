@@ -13,14 +13,7 @@ import java.util.List;
  *
  */
 public class FileUtil
-{
-	private StringUtil stringUtil;
-	
-	public FileUtil() 
-	{
-		stringUtil = new StringUtil();
-	}
-	
+{	
 	/** Return the contents of the text file as a list of lines.
 	 * 
 	 * @param f The text file to be read.
@@ -65,15 +58,4 @@ public class FileUtil
 		return getLines(new File(fullFname));
 		
 	}
-	
-	/** Get the contents of a resource file as a single string.
-	 * 
-	 * @param fname The resource file to be read.
-	 * @return The contents of the file as a single concatenated string.
-	 */
-	public String getStringFromResource(String fname)
-	{
-		return stringUtil.getStringFromList(getListFromResource(fname));
-	}
-	
 }

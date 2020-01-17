@@ -11,12 +11,10 @@ import crypto.util.PlainTextUtil;
 
 public class SubstitutionCipherTest
 {
-	private PlainTextUtil plainTextUtil = new PlainTextUtil();
-	
 	@Test
 	public void testEncrypt()
 	{
-		
+		PlainTextUtil plainTextUtil = new PlainTextUtil();
 		String input = plainTextUtil.getSomePlainText();
 		
 		SubstitutionCipher sc = new SubstitutionCipher();
@@ -69,6 +67,13 @@ public class SubstitutionCipherTest
 				list.add(i);
 		}
 		return list;
+	}
+	
+	@Test
+	public void analysisOfPlainTextTest()
+	{
+		PlainTextUtil plainTextUtil = new PlainTextUtil();
+		String plainText = plainTextUtil.getLargePlainText();
 	}
 	
 	

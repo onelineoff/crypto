@@ -7,7 +7,14 @@ package crypto.util;
  */
 public class PlainTextUtil
 {
-	private FileUtil fileUtil = new FileUtil();
+	private FileUtil fileUtil;
+	private StringUtil stringUtil;
+	
+	public PlainTextUtil()
+	{
+		fileUtil = new FileUtil();
+		stringUtil = new StringUtil();
+	}
 	
 	/** Return some plain text.
 	 * 
@@ -15,7 +22,7 @@ public class PlainTextUtil
 	 */
 	public String getSomePlainText()
 	{
-		return fileUtil.getStringFromResource("plaintext1.txt");
+		return stringUtil.getStringFromList(fileUtil.getListFromResource("plaintext1.txt"));
 	}
 	
 	/** Return a different sample of plain text.
@@ -24,7 +31,7 @@ public class PlainTextUtil
 	 */
 	public String getMorePlainText() 
 	{
-		return fileUtil.getStringFromResource("plaintext2.txt");
+		return stringUtil.getStringFromList(fileUtil.getListFromResource("plaintext2.txt"));
 	}
 	
 	/** Return a larger sample of plain text.
@@ -33,6 +40,6 @@ public class PlainTextUtil
 	 */
 	public String getLargePlainText() 
 	{
-		return fileUtil.getStringFromResource("plaintext_long.txt");
+		return stringUtil.getStringFromList(fileUtil.getListFromResource("plaintext_long.txt"));
 	}
 }
