@@ -64,7 +64,7 @@ public class RotationCipher implements EncryptText
 		int lowerStartIndex = (int) 'a';
 		int upperStartIndex = (int) 'A';
 		
-		// Process each character, encypting lower case letters as lower case,
+		// Process each character, encrypting lower case letters as lower case,
 		// upper case letters as upper case,
 		// and the remaining characters unchanged.
 		for (int i=0; i<length; i++)
@@ -79,11 +79,9 @@ public class RotationCipher implements EncryptText
 			{
 				int index = (int) c - upperStartIndex;
 				c = upperCaseRotated[index];
-			}
-			else // Not a letter, leave unchanged.
-			{
-				output[i] = c;
-			}
+			}	
+			
+			output[i] = c;
 		}
 		
 		return new String(output);

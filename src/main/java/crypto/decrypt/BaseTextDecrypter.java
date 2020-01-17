@@ -42,8 +42,6 @@ public class BaseTextDecrypter {
 			word = word.toLowerCase();
 			if (dictionaryWords.contains(word))
 				count++;
-			else if (! stringUtil.isEmpty(word))
-				System.out.println("Word not found |" + word + "|");
 		}
 		
 		return count;		

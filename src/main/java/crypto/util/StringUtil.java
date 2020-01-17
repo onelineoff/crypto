@@ -171,6 +171,11 @@ public class StringUtil
 		return (c >= 'a' && c<= 'z');
 	}
 	
+	public boolean isUpperCase(Character c)
+	{
+		return (c >= 'A' && c<= 'Z');
+	}
+	
 	public List<String> getMostCommonWords(String str, int total)
 	{
 		str = str.toLowerCase();
@@ -273,6 +278,13 @@ public class StringUtil
 		return list;
 	}
 	
+	/** Find letters that occur more often as the first letter of a word than in general.
+	 *  In English, some letters are more likely to be the first letter of a word than
+	 *  their occurrence in the text in general.
+	 * @param str The text to be analyzed.
+	 * @param total The number of entries to be returned.
+	 * @return An ordered list of the characters more likely to be the first letter of a word.
+	 */
 	public List<Character> getMostCommonFirstCharacters(String str, int total)
 	{
 		str = str.toLowerCase();
@@ -311,6 +323,23 @@ public class StringUtil
 			commonList.add(it.next());
 		}
 		return commonList;
+	}
+	
+	/** Find letters that occur less often as the first letter of a word than in general.
+	 *  In English, some letters are less likely to be the first letter of a word than
+	 *  their occurrence in the text in general.
+	 * @param str The text to be analyzed.
+	 * @param total The number of entries to be returned.
+	 * @return An ordered list of the characters less likely to be the first letter of a word.
+	 */
+	public List<Character> getLeastCommonFirstCharacters(String str, int total)
+	{
+		List<Character> list = getMostCommonFirstCharacters(str, 26);
+		List<Character> leastCommonList = new ArrayList<>();
+		for (int i=25; i>25 - total; i--)
+			leastCommonList.add(list.get(i));
+		
+		return leastCommonList;
 	}
 	
 	public float getPercentOfCharacterInString(char c, String str)

@@ -149,4 +149,31 @@ public class StringUtilTest
 		System.out.println("Of 10 most common characters in text, list contained " + count);
 		Assert.assertTrue(count >= 5);
 	}
+	
+	@Test
+	public void testGetLeastLikelyFirstCharacters()
+	{
+		PlainTextUtil plainTextUtils = new PlainTextUtil();
+		StringUtil stringUtil = new StringUtil();
+		
+		List<Character> unlikelyList = stringUtil.getLeastLikelyFirstCharacters();
+		
+		String plainText = plainTextUtils.getLargePlainText();
+		List<Character> leastCommonList = stringUtil.getLeastCommonFirstCharacters(plainText, 10);
+		Assert.assertNotNull(leastCommonList);
+		Assert.assertEquals(10, leastCommonList.size());
+		
+		int count = 0;
+		for (Character c : leastCommonList)
+		{
+			if (unlikelyList.contains(c))
+				count++;
+			
+			System.out.print(c);
+			System.out.print(" ");
+		}
+		System.out.println();
+		System.out.println("Of 10 least common characters in text, list contained " + count);
+		Assert.assertTrue(count >= 3);
+	}
 }

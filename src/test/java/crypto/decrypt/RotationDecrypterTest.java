@@ -6,12 +6,12 @@ import crypto.encrypt.RotationCipher;
 import crypto.util.PlainTextUtil;
 
 public class RotationDecrypterTest
-{
-	private PlainTextUtil plainTextUtil = new PlainTextUtil();
-	
+{	
 	@Test
 	public void testRotationDecryption()
 	{
+		PlainTextUtil plainTextUtil = new PlainTextUtil();
+		
 		String text = plainTextUtil.getSomePlainText();
 		RotationCipher cipher = new RotationCipher();
 		String encrypted = cipher.encrypt(text);
