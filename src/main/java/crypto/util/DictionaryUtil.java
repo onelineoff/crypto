@@ -15,10 +15,14 @@ public class DictionaryUtil
 	private static final String dictionaryFileName = "/usr/share/dict/words";
 	
 	private FileUtil fileUtil;
+	private StringUtil stringUtil;
+	private Set<String> wordSet;
 	
 	public DictionaryUtil()
 	{
 		fileUtil = new FileUtil();
+		stringUtil = new StringUtil();
+		wordSet = null;
 	}
 	
 	/** Get a set of all the words in the dictionary.
@@ -28,6 +32,9 @@ public class DictionaryUtil
 	 */
 	public Set<String> getWords() throws FileNotFoundException
 	{
+		if (wordSet != null)
+			return wordSet;
+		
 		File f = new File(dictionaryFileName);
 		if (!f.exists())
 		{
@@ -44,7 +51,27 @@ public class DictionaryUtil
 		if (lines != null)
 			set.addAll(lines);
 		
+		wordSet = set;
 		return set;
+	}
+	
+	public int getWordCount(String text)
+	{
+		int count = 0;
+		try {
+			getWords();
+			
+			String[] potentialWords = stringUtil.getWords(text);
+			for (String potentialWord : potentialWords)
+			{
+				if (wordSet.contains(potentialWord))
+					count++;
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return count;
 	}
 	
 	public String getDictionaryFileName()

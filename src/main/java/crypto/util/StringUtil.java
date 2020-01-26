@@ -60,6 +60,22 @@ public class StringUtil
 		return words;
 	}
 	
+	public String[] getWords(String text, int length)
+	{
+		String[] arr = getWords(text);
+		List<String> list = new ArrayList<>();
+		for (String word : arr) 
+		{
+			if (word.length() == length)
+			{
+				list.add(word);
+			}
+		}
+		
+		String[] retArr = new String[list.size()];
+		list.toArray(retArr);
+		return retArr;
+	}
 	
 	public int getNonEmptyWordCount(String text)
 	{
@@ -176,10 +192,20 @@ public class StringUtil
 		return (c >= 'A' && c<= 'Z');
 	}
 	
+	public List<String> getMostCommonWords(String str, int length, int total) {
+		String[] wordArr = getWords(str, length);
+		return getMostCommonWords(str, wordArr, total);
+	}
+	
 	public List<String> getMostCommonWords(String str, int total)
 	{
-		str = str.toLowerCase();
 		String[] wordArr = getWords(str);
+		return getMostCommonWords(str, wordArr, total);
+	}
+	
+	public List<String> getMostCommonWords(String str, String[] wordArr, int total)
+	{
+		str = str.toLowerCase();
 		Map<String, Integer> wordCount = new HashMap<>();
 		for (String word : wordArr)
 		{
@@ -198,14 +224,19 @@ public class StringUtil
 		Set<String> wordSet = sortedMap.keySet();
 		Iterator<String> it = wordSet.iterator();
 		for (int i=0; i<total; i++) 
-		{
-			String word = it.next();
-			while (isEmpty(word))
-				word = it.next();	
-			
-			list.add(word);
+		{	
+			if (it.hasNext())
+			{
+				String word = it.next();
+				while (isEmpty(word))
+					word = it.next();	
+
+				list.add(word);
+			}
+			else
+				break;
 		}
-		
+
 		return list;
 	}
 	

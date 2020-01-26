@@ -47,10 +47,11 @@ public class StringUtilTest
 		PlainTextUtil plainTextUtils = new PlainTextUtil();
 		StringUtil stringUtil = new StringUtil();
 		
+		int charNum = 10;
 		String plainText = plainTextUtils.getLargePlainText();
-		List<Character> charList = stringUtil.getMostCommonCharacters(plainText, 10);
+		List<Character> charList = stringUtil.getMostCommonCharacters(plainText, charNum);
 		Assert.assertNotNull(charList);
-		Assert.assertEquals(10, charList.size());
+		Assert.assertEquals(charNum, charList.size());
 		List<Character> commonCharacters = stringUtil.getMostFrequentCharacters();
 		int count = 0;
 		for (Character c : charList)
@@ -67,7 +68,7 @@ public class StringUtilTest
 		System.out.println();
 		
 		System.out.println("Most popular characters in text that are in top letters list is " + count);
-		Assert.assertTrue(count >= 7);
+		Assert.assertTrue(count >= charNum * 0.7f);
 	}
 	
 	@Test
@@ -77,6 +78,7 @@ public class StringUtilTest
 		StringUtil stringUtil = new StringUtil();
 		
 		String plainText = plainTextUtils.getLargePlainText();
+		plainText = plainText.toLowerCase();
 		List<String> wordList = stringUtil.getMostCommonWords(plainText, 40);
 		Assert.assertNotNull(wordList);
 		Assert.assertEquals(40, wordList.size());
@@ -93,6 +95,32 @@ public class StringUtilTest
 		
 		System.out.println("Number of popular words that are most popular words is " + count);
 		Assert.assertTrue(count >= 25);
+	}
+	
+	@Test
+	public void testGetMostCommonTwoLetterWords()
+	{
+		PlainTextUtil plainTextUtils = new PlainTextUtil();
+		StringUtil stringUtil = new StringUtil();
+		
+		int total = 10;
+		String plainText = plainTextUtils.getLargePlainText();
+		List<String> wordList = stringUtil.getMostCommonWords(plainText, 2, total);
+		Assert.assertNotNull(wordList);
+		Assert.assertEquals(total, wordList.size());
+		
+		List<String> commonWordList = stringUtil.getMostFrequentWords();
+		int count = 0;
+		
+		for (String word : wordList)
+		{
+			System.out.println(word);
+			if (commonWordList.contains(word))
+				count++;
+		}
+		
+		System.out.println("Number of two letter popular words that are most popular words is " + count);
+		Assert.assertTrue(count >= 8);
 	}
 	
 	@Test

@@ -29,11 +29,25 @@ public class SubstitutionCipher implements EncryptText
 	@Override
 	public String encrypt(String plainText)
 	{
-		// First, get the map of scrambled letters, both lower and upper case.
 		char[] lowercase = stringUtil.getLowerCaseLetters();
 		char[] lowerCaseScrambled = randomUtil.scramble(lowercase);
-		char[] upperCaseScrambled = new String(lowerCaseScrambled).toUpperCase().toCharArray();
+		return encrypt(plainText, lowerCaseScrambled);
+	}
+	
+	/** Encrypt the text using the specified key.
+	 * This method uses the substitution cipher.
+	 * Note that if the mapping is reversed, e.g., if 'a' becomes 'g', then
+	 * calling the method with a mapping where 'g' becomes 'a' also decrypts.
+	 * 
+	 * @param plainText The text to be encrypted.
+	 * @param lowerCaseScrambled A mapping from each lower case letter to the substituted letter.
+	 * @return The encypted text.
+	 */
+	public String encrypt(String plainText, char[] lowerCaseScrambled)
+	{	
+		// First, get the map of scrambled letters, both lower and upper case.
 		
+		char[] upperCaseScrambled = new String(lowerCaseScrambled).toUpperCase().toCharArray();		
 		
 		char[] plainTextArr = plainText.toCharArray();
 		int length = plainTextArr.length;

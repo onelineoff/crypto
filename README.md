@@ -40,10 +40,12 @@ Stegnography is the science of hiding information where it is not plainly visibl
 3. Evaluate whether other third party libraries, such as Apache Commons, should be used to replace some of this code.
 4. Additional unit tests.
 5. Implement decrypter for substitution cipher.
-6. Test Eclipse install from scratch from maven file.
-7. Some methods in StringUtil should be in DictionaryUtil
-8. Test mvn clean install.
-9. Test mvn javadoc.
+6. Lots of duplicate code. Clean up.
+8. Brute force not quite working.
+9. Test Eclipse install from scratch from maven file.
+10. Some methods in StringUtil should be in DictionaryUtil
+11. Test mvn clean install.
+12. Test mvn javadoc.
 
 # Caveats
 
