@@ -24,7 +24,7 @@ For example, a one to one substitution might be done like this:
 There are many more combinations than with the rotation cipher, but this too can be easily cracked by a modern computer. There are too many combinations to solve this by brute force, but some techniques are:
 * Letters appear with different frequency.  The most common are: e,a,r,i,o,t,n,s.
 * The most common 80 words are likely to appear with high frequency in any text.
-*  Certain bigrams (two letters) appear with the greatest frequency.  They are: th, he, in, er, an.
+*  Certain bigrams (two letters in sequence) appear with the greatest frequency.  The most frequent are: th, he, in, er, an.
 
 Knowing the above facts, the decrypter program can first narrow down the possibilities by analyzing the encrypted text, and looking at the frequency of the encrypted letters, as well as the most common encrypted words, and most common encrypted bigrams.
 
@@ -41,7 +41,6 @@ Stegnography is the science of hiding information where it is not plainly visibl
 4. Additional unit tests.
 5. Implement decrypter for substitution cipher.
 6. Lots of duplicate code. Clean up.
-8. Brute force not quite working.
 9. Test Eclipse install from scratch from maven file.
 10. Some methods in StringUtil should be in DictionaryUtil
 11. Test mvn clean install.

@@ -62,12 +62,12 @@ public class SubstitutionCipher implements EncryptText
 			char c = plainTextArr[i];
 			if (stringUtil.isLowerCase(c))
 			{
-				int index = (int) c - lowerStartIndex;
+				int index = (int) (c - lowerStartIndex);
 				c = lowerCaseScrambled[index];
 			}
 			else if (stringUtil.isUpperCase(c))
 			{
-				int index = (int) c - upperStartIndex;
+				int index = (int) (c - upperStartIndex);
 				c = upperCaseScrambled[index];
 			}
 			// If the character isn't a letter, leave it unchanged.

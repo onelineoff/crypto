@@ -27,6 +27,10 @@ public class CombationUtilTest {
 		CombinationUtil combinationUtil = new CombinationUtil();
 		char[] testArr = {'a', 'b', 'c', 'd', 'e'};
 		List<String> retList = combinationUtil.getCombinations(testArr);
+		for (String str : retList)
+		{
+			Assert.assertEquals(5,  str.length());
+		}
 		Assert.assertNotNull(retList);
 		Assert.assertEquals(120, retList.size());
 	}
@@ -37,6 +41,10 @@ public class CombationUtilTest {
 		CombinationUtil combinationUtil = new CombinationUtil();
 		char[] testArr = {'a', 'b', 'c', 'd', 'e', 'f'};
 		List<String> retList = combinationUtil.getCombinations(testArr);
+		for (String str : retList)
+		{
+			Assert.assertEquals(6,  str.length());
+		}
 		Assert.assertNotNull(retList);
 		Assert.assertEquals(720, retList.size());
 	}
@@ -47,6 +55,10 @@ public class CombationUtilTest {
 		CombinationUtil combinationUtil = new CombinationUtil();
 		char[] testArr = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
 		List<String> retList = combinationUtil.getCombinations(testArr);
+		for (String str : retList)
+		{
+			Assert.assertEquals(8,  str.length());
+		}
 		Assert.assertNotNull(retList);
 		Assert.assertEquals(40320, retList.size());
 	}
@@ -57,6 +69,10 @@ public class CombationUtilTest {
 		CombinationUtil combinationUtil = new CombinationUtil();
 		char[] testArr = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
 		List<String> retList = combinationUtil.getCombinations(testArr);
+		for (String str : retList)
+		{
+			Assert.assertEquals(10,  str.length());
+		}
 		Assert.assertNotNull(retList);
 		Assert.assertEquals(3628800, retList.size());
 	}

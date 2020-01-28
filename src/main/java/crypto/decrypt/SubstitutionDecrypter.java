@@ -25,7 +25,7 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 		
 		// The character to substitute is at each position, e.g, if foundArr[3] == 'g', then g is 
 		// substituted for d to decrypt.  This is meant for definite matches.
-		Character[] foundArr = new Character[26];
+		char[] foundArr = new char[26];
 		
 		String lowerCaseText = encryptedText.toLowerCase();
 		List<String> bigramList = stringUtil.getMostCommonBigrams(lowerCaseText, 20);
@@ -318,7 +318,7 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 		List<String> combinationList = combinationUtil.getCombinations(unknownLetterArray);
 		String decryptedText = "";
 		int bestCount = 0;
-		Character[] currKey = new Character[26];
+		char[] currKey = new char[26];
 		
 		// These 16 letters are known, and only need to be set once.
 		// Insert the 10 guesses into this array.
@@ -342,22 +342,27 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 		DictionaryUtil dictionaryUtil = new DictionaryUtil();
 		SubstitutionCipher substitutionCipher = new SubstitutionCipher();
 		
+		int guessCount = 0;
 		for (String currGuess : combinationList)
 		{
-			System.out.println("Curr guess is " + currGuess);
+			guessCount++;
+			if (guessCount % 100000 == 0)
+			{
+				System.out.println("Total guesses tested is " + guessCount);
+			}
 			for (int i=0; i< unknownLetterArray.length; i++)
 			{
-				char c = unknownLetterArray[i];
 				setChar(currGuess.charAt(i), unknownLetterArray[i], currKey);
 			}
 			
 			String potentialDecrypt = substitutionCipher.encrypt(
-					encryptedText, unknownLetterArray);
+					encryptedText, currKey);
 			int currCount = dictionaryUtil.getWordCount(potentialDecrypt);
 			if (currCount > bestCount)
 			{
 				bestCount = currCount;
 				decryptedText = potentialDecrypt;
+				System.out.println(decryptedText);
 				System.out.println("Decrypting, current word count is " + bestCount);
 			}
 		}
@@ -365,12 +370,12 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 		return decryptedText;
 	}
 	
-	public char getChar(char c, Character[] arrMap)
+	public char getChar(char c, char[] arrMap)
 	{
 		return arrMap[c - 'a'];
 	}
 	
-	public void setChar(char insertChar, char positionChar, Character[] arrMap)
+	public void setChar(char insertChar, char positionChar, char[] arrMap)
 	{
 		arrMap[positionChar - 'a'] = insertChar;
 	}

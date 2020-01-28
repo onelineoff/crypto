@@ -92,7 +92,13 @@ public class CombinationUtil {
 				}
 				
 				List<String> substrings = getCombinations(newArr, firstChar);
-				list.addAll(substrings);
+				List<String> fullList = new ArrayList<>();
+				for (String str : substrings)
+				{
+					fullList.add(new String(leadChar + str));
+				}
+					
+				list.addAll(fullList);
 			}
 		}
 		return list;

@@ -13,6 +13,7 @@ import java.util.Set;
 public class StringUtil
 {
 	private static final char[] lowercase = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+	private static final char[] uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
 	
 	private FileUtil fileUtil;
 	
@@ -28,9 +29,7 @@ public class StringUtil
 	
 	public char[] getUpperCaseLetters()
 	{
-		String str = new String(lowercase);
-		str = str.toUpperCase();
-		return str.toCharArray();
+		return uppercase;
 	}
 	
 	public char[] getUpperCaseArray(char[] input)

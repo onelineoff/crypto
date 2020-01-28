@@ -2,7 +2,6 @@ package crypto.decrypt;
 
 import org.junit.Test;
 
-import crypto.encrypt.RotationCipher;
 import crypto.encrypt.SubstitutionCipher;
 import crypto.util.PlainTextUtil;
 
