@@ -18,8 +18,8 @@ public class SubstitutionDecrypterTest {
 		System.out.println(text);
 		System.out.println(encrypted);
 		
-		SubstitutionDecrypter decrypter = new SubstitutionDecrypter();
-		String decryptedText = decrypter.decryptText(encrypted);
+		SubstitutionDecrypter decrypter = new SubstitutionDecrypter(encrypted);
+		String decryptedText = decrypter.decryptText();
 		
 		
 		System.out.println(decryptedText);
@@ -27,6 +27,6 @@ public class SubstitutionDecrypterTest {
 		long seconds = (t2 - t1) / 1000;
 		long minutes = seconds / 60;
 		System.out.println("Total decryption time for substitution cipher is " + 
-		minutes + ":" + (seconds % 60) + " minutes:seconds");
+		minutes + ":" + (seconds % 60));
 	}
 }

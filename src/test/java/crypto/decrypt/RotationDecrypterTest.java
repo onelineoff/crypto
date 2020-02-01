@@ -16,8 +16,8 @@ public class RotationDecrypterTest
 		RotationCipher cipher = new RotationCipher();
 		String encrypted = cipher.encrypt(text);
 		
-		RotationDecrypter decrypter = new RotationDecrypter();
-		String decryptedText = decrypter.decryptText(encrypted);
+		RotationDecrypter decrypter = new RotationDecrypter(encrypted);
+		String decryptedText = decrypter.decryptText();
 		
 		System.out.println(text);
 		System.out.println(encrypted);
@@ -32,8 +32,8 @@ public class RotationDecrypterTest
 		RotationCipher cipher = new RotationCipher();
 		String encrypted = cipher.encrypt(text);
 		
-		RotationDecrypter decrypter = new RotationDecrypter();
-		String decryptedText = decrypter.decryptText(encrypted);
+		RotationDecrypter decrypter = new RotationDecrypter(encrypted);
+		String decryptedText = decrypter.decryptText();
 		
 		System.out.println(text);
 		System.out.println(encrypted);

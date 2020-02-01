@@ -2,15 +2,16 @@ package crypto.decrypt;
 
 public class RotationDecrypter extends BaseTextDecrypter implements DecryptText
 {
+	private String encryptedText;
 	
-	public RotationDecrypter() 
+	public RotationDecrypter(String encryptedText) 
 	{
 		super();
+		this.encryptedText = encryptedText;
 	}
-	
-	
+		
 	@Override
-	public String decryptText(String encryptedText)
+	public String decryptText()
 	{
 		String plainText = encryptedText;
 		int matches = getMatchCount(plainText);
