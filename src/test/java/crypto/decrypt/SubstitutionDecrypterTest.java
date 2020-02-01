@@ -9,6 +9,7 @@ public class SubstitutionDecrypterTest {
 	@Test
 	public void testSubstitutionDecryption()
 	{
+		long t1 = System.currentTimeMillis();
 		PlainTextUtil plainTextUtil = new PlainTextUtil();
 		
 		String text = plainTextUtil.getLargePlainText();
@@ -22,5 +23,10 @@ public class SubstitutionDecrypterTest {
 		
 		
 		System.out.println(decryptedText);
+		long t2 = System.currentTimeMillis();
+		long seconds = (t2 - t1) / 1000;
+		long minutes = seconds / 60;
+		System.out.println("Total decryption time for substitution cipher is " + 
+		minutes + ":" + (seconds % 60) + " minutes:seconds");
 	}
 }

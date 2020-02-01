@@ -23,4 +23,20 @@ public class RotationDecrypterTest
 		System.out.println(encrypted);
 		System.out.println(decryptedText);
 	}
+	
+	@Test
+	public void testKidsMessage()
+	{
+
+		String text = "Your message, should you choose to accept it, is to decrypt this text";
+		RotationCipher cipher = new RotationCipher();
+		String encrypted = cipher.encrypt(text);
+		
+		RotationDecrypter decrypter = new RotationDecrypter();
+		String decryptedText = decrypter.decryptText(encrypted);
+		
+		System.out.println(text);
+		System.out.println(encrypted);
+		System.out.println(decryptedText);
+	}
 }

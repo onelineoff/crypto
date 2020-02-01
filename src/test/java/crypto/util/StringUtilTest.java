@@ -1,7 +1,9 @@
 package crypto.util;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,9 +35,71 @@ public class StringUtilTest
 	{
 		PlainTextUtil plainTextUtils = new PlainTextUtil();
 		StringUtil stringUtil = new StringUtil();
+		String plainText = plainTextUtils.getMorePlainText();
+		String[] wordArr = stringUtil.getWords(plainText);
+		Assert.assertEquals(41, wordArr.length);
+		for (String word : wordArr)
+		{
+			if (word.trim().length() == 0)
+				Assert.fail();
+		}
+	}
+	
+	@Test
+	public void testGetWordsByLength()
+	{
+		PlainTextUtil plainTextUtils = new PlainTextUtil();
+		StringUtil stringUtil = new StringUtil();
+		String plainText = plainTextUtils.getSomePlainText();
+		for (int i=1; i<=8; i++) 
+		{
+			String[] wordArr = stringUtil.getWords(plainText, i);
+			Assert.assertTrue(wordArr.length > 0);
+			Assert.assertTrue(testWordsByLength(wordArr, i));
+		}
+
+		plainText = plainTextUtils.getMorePlainText();
+		for (int i=1; i<=8; i++) 
+		{	
+			String[] wordArr = stringUtil.getWords(plainText, i);
+			// There are no 4 letter words in this text sample.
+			if (i == 4)
+				Assert.assertFalse(wordArr.length > 0);
+			else
+			{
+				Assert.assertTrue(wordArr.length > 0);
+				Assert.assertTrue(testWordsByLength(wordArr, i));
+			}
+		}
+	}
+	
+	/** Utility testing method for testing that all words in the array are the correct length.
+	 * 
+	 * @param wordArr The array to be tested.
+	 * @param len The length of the words that's expected
+	 * @return true if all the words are of the expected length, or the array is empty.
+	 * 
+	 */
+	private boolean testWordsByLength(String[] wordArr, int len)
+	{
+		boolean flag = true;
+		for (String word : wordArr)
+		{
+			if (word.length() != len)
+				flag = false;
+		}
+		
+		return flag;
+	}
+	
+	@Test
+	public void testGetWordCount()
+	{
+		PlainTextUtil plainTextUtils = new PlainTextUtil();
+		StringUtil stringUtil = new StringUtil();
 		
 		String plainText = plainTextUtils.getLargePlainText();
-		int count = stringUtil.getNonEmptyWordCount(plainText);
+		int count = stringUtil.getWordCount(plainText);
 		
 		System.out.println("Word count from large plain text is " + count);
 		Assert.assertEquals(1168, count);
@@ -132,7 +196,11 @@ public class StringUtilTest
 		String plainText = plainTextUtils.getLargePlainText();
 		
 		List<String> bigrams = stringUtil.getMostFrequentBigrams();
+		Assert.assertNotNull(bigrams);
+		Assert.assertEquals(21, bigrams.size());
 		
+		// Get the most common bigrams from the text sample, and see
+		// how many are in the most common bigrams in English in general.
 		List<String> bigramList = stringUtil.getMostCommonBigrams(plainText, 20);
 		Assert.assertNotNull(bigramList);
 		Assert.assertEquals(20, bigramList.size());
@@ -203,5 +271,44 @@ public class StringUtilTest
 		System.out.println();
 		System.out.println("Of 10 least common characters in text, list contained " + count);
 		Assert.assertTrue(count >= 3);
+	}
+	
+	@Test
+	public void testSortByValueDescending()
+	{
+		StringUtil stringUtil = new StringUtil();
+		
+		Map<String, Integer> frequencyMap = new HashMap<>();
+		frequencyMap.put("bat", 1);
+		frequencyMap.put("hello", 4);
+		frequencyMap.put("the", 10);
+		frequencyMap.put("a", 12);
+		frequencyMap.put("to", 7);
+		frequencyMap.put("porcupine", 1);
+		frequencyMap.put("friend", 2);
+		frequencyMap.put("house", 3);
+		
+		Map<String, Integer> sortedMap = stringUtil.sortByValueDescending(frequencyMap);
+		Set<String> sortedSet = sortedMap.keySet();
+		for (String word : sortedSet)
+		{
+			System.out.println(word);
+		}
+	}
+	
+	@Test
+	public void testReverseChars()
+	{
+		StringUtil stringUtil = new StringUtil();
+		
+		char[] arr = {'s', 'k', 'h', 'q', 'i', 'j', 'c', 'f', 'm', 'n', 'o', 'p',
+				'a', 'w', 'l', 'r', 'g', 'd', 'x', 'y', 'z', 'b', 't', 'u', 'v', 'e'};
+		char[] reverseArr = new char[26];
+		stringUtil.reverseChars(arr, reverseArr);
+		System.out.println(new String(reverseArr));
+		
+		char[] restoreArr = new char[26];
+		stringUtil.reverseChars(reverseArr, restoreArr);
+		System.out.println(new String(restoreArr));
 	}
 }

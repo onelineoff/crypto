@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +11,11 @@ import java.util.Set;
 
 public class StringUtil
 {
-	private static final char[] lowercase = "abcdefghijklmnopqrstuvwxyz".toCharArray();
-	private static final char[] uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+	private static final String lowercaseString = "abcdefghijklmnopqrstuvwxyz";
+	private static final char[] lowercase = lowercaseString.toCharArray();
+	
+	private static final String uppercaseString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	private static final char[] uppercase = uppercaseString.toCharArray();
 	
 	private FileUtil fileUtil;
 	
@@ -30,6 +32,11 @@ public class StringUtil
 	public char[] getUpperCaseLetters()
 	{
 		return uppercase;
+	}
+	
+	public String getLowerCaseString()
+	{
+		return lowercaseString;
 	}
 	
 	public char[] getUpperCaseArray(char[] input)
@@ -53,12 +60,26 @@ public class StringUtil
 		return sb.toString();
 	}
 	
+	/** Convert the text into an array of words.
+	 *  Words consist of one or more alphanumeric characters.
+	 *  If there are multiple non-word characters between two words,
+	 *  such as a period followed by two spaces, the words before and
+	 *  after these three non-word characters are returned, but the 
+	 *  period and two spaces are thrown out.
+	 * @param text The input text
+	 * @return An array of words.
+	 */
 	public String[] getWords(String text)
 	{
-		String[] words = text.split("\\W");
+		String[] words = text.split("\\W+");
 		return words;
 	}
 	
+	/** Get the words of a specified length.
+	 * @param text The input text
+	 * @param length The length of the words to be returned.
+	 * @return All words in the input text of the specified length.
+	 */
 	public String[] getWords(String text, int length)
 	{
 		String[] arr = getWords(text);
@@ -76,36 +97,22 @@ public class StringUtil
 		return retArr;
 	}
 	
-	public int getNonEmptyWordCount(String text)
+	/** Return the number of words in the text.
+	 * 
+	 * @param text The text to be examined.
+	 * @return The number of words.
+	 */
+	public int getWordCount(String text)
 	{
-		String[] wordArr = getWords(text);
-		
-		int count = 0;
-		for (String word : wordArr)
-		{
-			if (! isEmpty(word))
-				count++;
-		}
-		
-		return count;
+		return getWords(text).length;		
 	}
 	
-	public boolean isEmpty(String str)
-	{
-		boolean flag = true;
-		
-		if (str == null)
-			flag = true;
-		else if (str.length() == 0)
-			flag = true;
-		else
-		{
-			str = str.trim();
-			flag = str.length() == 0;
-		}
-		return flag;
-	}
-	
+	/** Return a list of the most frequent characters, in descending order.
+	 *  These are the most frequent characters in the English language.
+	 *  @see https://www.rd.com/culture/common-letters-english-language/
+	 * 
+	 * @return An ordered list of the most frequent characters, in descending order.
+	 */
 	public List<Character> getMostFrequentCharacters() 
 	{
 		String[] sarr = fileUtil.getListFromResource("letters.txt").get(0).split(",");
@@ -118,11 +125,24 @@ public class StringUtil
 		return list;
 	}
 	
+	/** The most frequent words in English, in descending order.
+	 *  @see https://www.rypeapp.com/most-common-english-words/
+	 * @return An ordered list of the most frequent words in English, in descending order.
+	 */
 	public List<String> getMostFrequentWords() 
 	{
 		return fileUtil.getListFromResource("words.txt");
 	}
 	
+	/** The most frequent two letter combinations in the English language.
+	 *  Letters such as th, he, in, and er tend to occur together much
+	 *  more frequently than would be expected if the occurrence of the bigrams
+	 *  was the same as the popularity of letter 1 multipled by that of letter 2.
+	 *  In fact, e, a, and r are the three most popular letters in English, but
+	 *  bigrams with two of these letters are only 4th, 6th, and 20th most common.
+	 *  @see https://blogs.sas.com/content/iml/2014/09/26/bigrams.html
+	 * @return
+	 */
 	public List<String> getMostFrequentBigrams() 
 	{
 		String[] sarr = fileUtil.getListFromResource("bigrams.txt").get(0).split(",");
@@ -130,6 +150,13 @@ public class StringUtil
 		return list;
 	}
 
+	/** Find the most common characters in the given text.
+	 * The text is converted to all lower case before it's analyzed.
+	 * 
+	 * @param str The string to be analyzed
+	 * @param total The number of results to be returned.
+	 * @return A list of the most common characters, in descending order.
+	 */
 	public List<Character> getMostCommonCharacters(String str, int total) 
 	{
 		List<Character> list = new ArrayList<>();
@@ -145,6 +172,7 @@ public class StringUtil
 		for (int i=0; i<str.length(); i++)
 		{
 			Character c = str.charAt(i);
+			// The character is either a lower case letter, or a non-word character.
 			if (isLowerCase(c))
 			{
 				int count = charCountMap.get(c);
@@ -155,16 +183,17 @@ public class StringUtil
 		
 		Map<Character, Integer> sortedMap = sortByValueDescending(charCountMap);
 		Set<Character> charSet = sortedMap.keySet();
-		Iterator<Character> it = charSet.iterator();
-		for (int i=0; i<total; i++) 
-		{
-			list.add(it.next());
-		}
+		list.addAll(charSet);
+		if (list.size() > total)
+			list = list.subList(0, total);
+
 		return list;
 		
 	}
 	
 	/** Sort the map by the value, in descending order.
+	 *  This method used both generics, and functional programming techniques.
+	 *  Note that maps with both characters and string as their keys call this.
 	 * 
 	 * @param inputMap The map to be sorted
 	 * @return The sorted map
@@ -181,27 +210,67 @@ public class StringUtil
 		return sortedMap;
 	}
 	
+	/** Return true if the character is a lower case letter.
+	 *  This works because of the way Java defines characters.
+	 *  See the ASCII and Unicode standards for more details.
+	 *  
+	 * @param c The character to be tested.
+	 * @return true if the character is a lower case letter.
+	 */
 	public boolean isLowerCase(Character c)
 	{
+		if (c == null)
+			return false;
+		
 		return (c >= 'a' && c<= 'z');
 	}
 	
+	/** Return true if the character is an upper case letter.
+	 *  This works because of the way Java defines characters.
+	 *  See the ASCII and Unicode standards for more details.
+	 *  
+	 * @param c The character to be tested.
+	 * @return true if the character is an upper case letter.
+	 */
 	public boolean isUpperCase(Character c)
 	{
+		if (c == null)
+			return false;
+		
 		return (c >= 'A' && c<= 'Z');
 	}
 	
+	/** Get the most common words in the text of a given length.
+	 * 
+	 * @param str The text to be analyzed
+	 * @param length The length of words to be used.
+	 * @param total The number of words to be returned.
+	 * @return An ordered list in descending order with the results.
+	 */
 	public List<String> getMostCommonWords(String str, int length, int total) {
 		String[] wordArr = getWords(str, length);
 		return getMostCommonWords(str, wordArr, total);
 	}
 	
+	/** Get the most common words in the text of a given length.
+	 * 
+	 * @param str The text to be analyzed
+	 * @param length The length of words to be used.
+	 * @return An ordered list in descending order with the results.
+	 */
 	public List<String> getMostCommonWords(String str, int total)
 	{
 		String[] wordArr = getWords(str);
 		return getMostCommonWords(str, wordArr, total);
 	}
 	
+	/** Return the most common words in the text that are in the specified list.
+	 * 
+	 * @param str The text to be analyzed
+	 * @param wordArr The words that are to be searched for in the text.
+	 * @param total The total number of words to be returned.
+	 * @return An ordered list in descending order from the array of words passed in.
+	 */
 	public List<String> getMostCommonWords(String str, String[] wordArr, int total)
 	{
 		str = str.toLowerCase();
@@ -221,19 +290,11 @@ public class StringUtil
 		
 		List<String> list = new ArrayList<>();
 		Set<String> wordSet = sortedMap.keySet();
-		Iterator<String> it = wordSet.iterator();
-		for (int i=0; i<total; i++) 
-		{	
-			if (it.hasNext())
-			{
-				String word = it.next();
-				while (isEmpty(word))
-					word = it.next();	
-
-				list.add(word);
-			}
-			else
-				break;
+		list.addAll(wordSet);
+		
+		if (list.size() > total)
+		{
+			list = list.subList(0, total);
 		}
 
 		return list;
@@ -274,11 +335,10 @@ public class StringUtil
 		Map<String, Integer> sortedMap = sortByValueDescending(bigramCount);
 		
 		Set<String> bigramSet = sortedMap.keySet();
-		Iterator<String> it = bigramSet.iterator();
-		for (int i=0; i<total; i++) 
+		list.addAll(bigramSet);
+		if (list.size() > total)
 		{
-			String bigram = it.next();	
-			list.add(bigram);
+			list = list.subList(0, total);
 		}
 		
 		return list;
@@ -347,11 +407,8 @@ public class StringUtil
 		Map<Character,Integer> sortedMap = sortByValueDescending(ratioMap);
 		List<Character> commonList = new ArrayList<>();
 		Set<Character> charSet = sortedMap.keySet();
-		Iterator<Character> it = charSet.iterator();
-		for (int i=0; i<total; i++) 
-		{
-			commonList.add(it.next());
-		}
+		commonList.addAll(charSet);
+		
 		return commonList;
 	}
 	
@@ -384,5 +441,41 @@ public class StringUtil
 		}
 		
 		return (float) count / (float) str.length();
+	}
+	
+	public char getChar(char c, char[] arrMap)
+	{
+		return arrMap[c - 'a'];
+	}
+	
+	public void setChar(char positionChar, char insertChar, char[] arrMap)
+	{
+		setChar(positionChar - 'a', insertChar, arrMap);
+	}
+	
+	public void setChar(char positionChar, int insertChar, char[] arrMap)
+	{
+		setChar(positionChar - 'a', lowercase[insertChar], arrMap);
+	}
+	public void setChar(int index, char insertChar, char[] arrMap)
+	{
+		arrMap[index] = insertChar;
+	}
+	
+	/** Return an array with the inverse mapping.
+	 *  The input array is a mapping from plain text to substituted text.
+	 *  So, for example, for the mapping a -> g, b -> d, and c -> l,
+	 *  in the return array, the mapping would be g -> a, d -> b, l -> c
+	 * @param charArr The mapping array, where charArr[0] is a, charArr[1] is b, etc.
+	 * @param reverseArr The array which maps from the substituted text to plain text.
+	 */
+	public void reverseChars(char[] charArr, char[] reverseArr)
+	{
+		int index = 0;
+		for (char c : charArr)
+		{
+			setChar(c,  index, reverseArr);
+			index++;
+		}
 	}
 }

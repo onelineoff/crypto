@@ -15,7 +15,7 @@ public class BaseTextDecrypterTest
 		BaseTextDecrypter baseTextDecrypter = new BaseTextDecrypter();
 		
 		String plainText = plainTextUtil.getLargePlainText();
-		System.out.println("word count is " + stringUtil.getNonEmptyWordCount(plainText));
+		System.out.println("word count is " + stringUtil.getWordCount(plainText));
 		System.out.println("Dictionary word count is " + 
 				baseTextDecrypter.getMatchCount(plainText));
 		

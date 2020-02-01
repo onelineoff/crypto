@@ -5,7 +5,7 @@ import java.util.List;
 
 public class CombinationUtil {
 
-	public List<String> getCombinations(char[] arr) 
+	public List<String> getCombinations(Character[] arr) 
 	{
 		List<String> list = new ArrayList<>();
 		if (arr.length < 4)

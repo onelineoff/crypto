@@ -11,7 +11,7 @@ public class CombationUtilTest {
 	public void testCombinations()
 	{
 		CombinationUtil combinationUtil = new CombinationUtil();
-		char[] testArr = {'a', 'b', 'c', 'd'};
+		Character[] testArr = {'a', 'b', 'c', 'd'};
 		List<String> retList = combinationUtil.getCombinations(testArr);
 		for (String str : retList)
 		{
@@ -25,7 +25,7 @@ public class CombationUtilTest {
 	public void testFiveCombinations()
 	{
 		CombinationUtil combinationUtil = new CombinationUtil();
-		char[] testArr = {'a', 'b', 'c', 'd', 'e'};
+		Character[] testArr = {'a', 'b', 'c', 'd', 'e'};
 		List<String> retList = combinationUtil.getCombinations(testArr);
 		for (String str : retList)
 		{
@@ -39,7 +39,7 @@ public class CombationUtilTest {
 	public void testSixCombinations()
 	{
 		CombinationUtil combinationUtil = new CombinationUtil();
-		char[] testArr = {'a', 'b', 'c', 'd', 'e', 'f'};
+		Character[] testArr = {'a', 'b', 'c', 'd', 'e', 'f'};
 		List<String> retList = combinationUtil.getCombinations(testArr);
 		for (String str : retList)
 		{
@@ -53,7 +53,7 @@ public class CombationUtilTest {
 	public void testEightCombinations()
 	{
 		CombinationUtil combinationUtil = new CombinationUtil();
-		char[] testArr = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+		Character[] testArr = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
 		List<String> retList = combinationUtil.getCombinations(testArr);
 		for (String str : retList)
 		{
@@ -67,7 +67,7 @@ public class CombationUtilTest {
 	public void testTenCombinations()
 	{
 		CombinationUtil combinationUtil = new CombinationUtil();
-		char[] testArr = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
+		Character[] testArr = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
 		List<String> retList = combinationUtil.getCombinations(testArr);
 		for (String str : retList)
 		{

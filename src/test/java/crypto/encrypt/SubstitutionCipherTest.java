@@ -67,14 +67,5 @@ public class SubstitutionCipherTest
 				list.add(i);
 		}
 		return list;
-	}
-	
-	@Test
-	public void analysisOfPlainTextTest()
-	{
-		PlainTextUtil plainTextUtil = new PlainTextUtil();
-		String plainText = plainTextUtil.getLargePlainText();
-	}
-	
-	
+	}	
 }
