@@ -30,6 +30,10 @@ Knowing the above facts, the decrypter program can first narrow down the possibi
 
 Using the above information, the number of possibilities becomes much smaller, and those can be examined in a brute force manner.
 
+This can be further refined by breaking up the brute force search into two steps, taking advantage of the fact that the brute force search is proportional to n factorial, where n is the number of unknown letters, and if a + b = c, then a! + b! is much, much less than c!.
+
+
+
 # Stegnography
 
 Stegnography is the science of hiding information where it is not plainly visible.  Although not stegnography per se, QR codes are a well-defined example of this.  A QR code can encode several thousand characters worth of data. Information can be hidden from the average person, but can be easily viewed by anyone who decodes the image, often with an app on a phone or tablet.
@@ -45,10 +49,14 @@ https://zxing.org/w/decode.jspx -  QR image decoder.
 4. Additional unit tests.
 5. Lots of duplicate code. Clean up, and refactor.
 6. Examine Character vs char, array vs List.
-7. Test Eclipse install from scratch from maven file.
-8. Some methods in StringUtil should be in DictionaryUtil
-9. Test mvn clean install.
-10. Test mvn javadoc.
+7. Since foundArr is a central data structure, it should be its own class, with set(), get(), reverse()  methods,
+8. Move code from SubstitutionDecrypter to DictionaryUtil class.
+9. Put TextDecrypter interface back to the way it was before.
+10. Add divide and conquer brute force option.
+11. Test Eclipse install from scratch from maven file.
+12. Some methods in StringUtil should be in DictionaryUtil
+13. Test mvn clean install.
+14. Test mvn javadoc.
 
 # Caveats
 

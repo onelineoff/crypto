@@ -1,7 +1,9 @@
 package crypto.util;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CombinationUtil {
 
@@ -37,6 +39,29 @@ public class CombinationUtil {
 		return list;
 	}
 	
+	public List<String> getCombinations(Character[] arr, int len)
+	{		
+		List<String> list = getCombinations(arr);
+		if (arr.length == len)
+			return list;
+
+		Set<String> comboSet = new HashSet<>();
+
+		for (String str : list) 
+		{
+			if (str.length() > len)
+			{
+				str = str.substring(0, len);
+				comboSet.add(str);
+			}
+		}
+		
+		List<String> retList = new ArrayList<>();
+		retList.addAll(comboSet);
+		
+		return retList;		
+	}
+
 	protected List<String> getCombinations(char[] arr, char leadChar) 
 	{
 		List<String> list = new ArrayList<>();
@@ -49,7 +74,6 @@ public class CombinationUtil {
 			newArr[3] = arr[2];
 			list.add(new String(newArr));
 			
-			newArr[0] = leadChar;
 			newArr[1] = arr[0];
 			newArr[2] = arr[2];
 			newArr[3] = arr[1];

@@ -1,6 +1,7 @@
 package crypto.decrypt;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import crypto.encrypt.SubstitutionCipher;
@@ -10,7 +11,6 @@ import crypto.util.DictionaryUtil;
 public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptText
 {
 	/** These are the letters not guessed from text analysis.*/
-	private char[] unknownLetterArray = {'c', 'g', 'j', 'k', 'l', 'p', 'q', 'v', 'x', 'z'}; 
 	private String encryptedText;
 	private List<Character> commonCharList;
 	private char[] foundArr;
@@ -22,16 +22,21 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 	private List<String> threeWordList;
 	private List<String> fourWordList;
 	private char[] reverseKey;
+	private char[] bestKey;
 	
 	public SubstitutionDecrypter(String encryptedText)
 	{
 		super();
 		this.encryptedText = encryptedText;
-		commonCharList = stringUtil.getMostCommonCharacters(encryptedText, 10);
+		commonCharList = stringUtil.getMostCommonCharacters(encryptedText, 10);		
+		
 		// The character to substitute is at each position, e.g, if foundArr[3] == 'g', then g is 
 		// substituted for d to decrypt.  This is meant for definite matches.
 		foundArr = new char[26];
+		for (int i=0; i<26; i++)
+			foundArr[i]= '-';
 		reverseKey = new char[26];
+		bestKey = new char[26];
 
 		lowerCaseText = encryptedText.toLowerCase();
 		bigramList = stringUtil.getMostCommonBigrams(lowerCaseText, 20);
@@ -70,6 +75,28 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 	{
 		// First, find some letters that are fairly easy to guess.
 		// Once the unknown list is smaller, use brute force the guess the rest.
+		findLetters();
+
+		String decryptedText = executeBruteForceSearch(foundArr);
+		
+		return decryptedText;
+	}
+	
+	public String smartDecryptText()
+	{
+		findLetters();
+
+		String decryptedText = executeSmarterBruteForceSearch(foundArr);
+		
+		return decryptedText;
+	}
+
+	/** Try to find the values of certain letters through analysis.
+	 *  Each of these methods are dependent on the ones before them, 
+	 *  so they should be called through this method.
+	 */
+	public char[] findLetters()
+	{
 		findThe();
 		
 		boolean foundI = findAAndI();		
@@ -87,12 +114,60 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 		findY();
 		findU();
 		findM();
-
-		String decryptedText = executeBruteForceSearch();
 		
-		return decryptedText;
+		return foundArr;
 	}
-
+	
+	/** Execute a faster brute force search.
+	 * 
+	 *  The idea is based on the fact that brute force search is proportional to
+	 *  n!.  So, break up the 10 unknown letters into two groups, the more common
+	 *  of these are c, g, k, l, p, and v.  The least common are j, q, x, and z.
+	 *  10! is about 3.6 million, while 6! + 4! is 720 + 24.  Run two brute force tests,
+	 *  and this should complete over 5000 times faster.
+	 *   
+	 * @param knownLetters
+	 * @return
+	 */
+	protected String executeSmarterBruteForceSearch(char[] knownLetters) {
+		System.out.println("knownLetters is       " + new String(knownLetters));
+		char[] unknownLetterArray = Arrays.copyOf(knownLetters, 26);
+		List<Character> commonList = stringUtil.getMostCommonCharacters(encryptedText, 26);	
+		stringUtil.setChar('j', commonList.get(25), unknownLetterArray);
+		stringUtil.setChar('q', commonList.get(24), unknownLetterArray);
+		stringUtil.setChar('x', commonList.get(23), unknownLetterArray);
+		stringUtil.setChar('z', commonList.get(22), unknownLetterArray);
+		System.out.println("unknownLetterArray is " + new String(unknownLetterArray));
+		
+		String partialDecrypt = executeBruteForceSearch(unknownLetterArray);
+		System.out.println("partial Decrypt is " + partialDecrypt);
+		
+		char c = bestKey['c' - 'a'];
+		stringUtil.setChar('c', c, unknownLetterArray);
+		
+		c = bestKey['g' - 'a'];
+		stringUtil.setChar('g', c, unknownLetterArray);
+		
+		c = bestKey['k' - 'a'];
+		stringUtil.setChar('k', c, unknownLetterArray);
+		
+		c = bestKey['l' - 'a'];
+		stringUtil.setChar('l', c, unknownLetterArray);
+		
+		c = bestKey['p' - 'a'];
+		stringUtil.setChar('p', c, unknownLetterArray);
+		
+		c = bestKey['v' - 'a'];
+		stringUtil.setChar('v', c, unknownLetterArray);
+		
+		stringUtil.clearChar('j', unknownLetterArray);
+		stringUtil.clearChar('q', unknownLetterArray);
+		stringUtil.clearChar('x', unknownLetterArray);
+		stringUtil.clearChar('z', unknownLetterArray);
+		
+		return executeBruteForceSearch(unknownLetterArray);
+	}
+	
 	/** Execute a brute force search to examine all possibilities of letters which are still unknown.
 	 *  Since the brute force algorithm run time complexity is n!, where n is the number of unknown
 	 *  letters, you need to verify manually that the unknown letter size is not too large.
@@ -101,7 +176,10 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 	 *  
 	 * @return The decrypted text.
 	 */
-	private String executeBruteForceSearch() {
+	protected String executeBruteForceSearch(char[] knownLetters) {
+		
+		System.out.println("knownLetters size is " + knownLetters.length);
+		System.out.println(new String(knownLetters));
 		
 		// First, put all missing letters into the list.
 		List<Character> missingLetters = new ArrayList<>();
@@ -111,9 +189,9 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 			missingLetters.add(c);
 		}
 		
-		// Remove all letters already found, so that missingLetters contains all unknown letters.
+		// Remove all letters already found, so that missing Letters contains all unknown letters.
 		// The letters being removed are the encrypted ones, not the plaintext ones.
-		for (Character c : foundArr)
+		for (Character c : knownLetters)
 		{
 			if (stringUtil.isLowerCase(c))
 			{
@@ -121,6 +199,7 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 			}
 		}
 		
+		System.out.println("missingLetters size is " + missingLetters.size());
 		Character[] missingArr = new Character[missingLetters.size()];
 		missingLetters.toArray(missingArr);
 		CombinationUtil combinationUtil = new CombinationUtil();
@@ -128,45 +207,70 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 		String decryptedText = "";
 		int bestCount = 0;
 		char[] currKey = new char[26];
+		for (int i=0; i<26; i++)
+			currKey[i] = '-';
 		
-		// These 16 letters are known, and only need to be set once.
-		// Insert the 10 guesses into this array.
-		stringUtil.setChar('a', stringUtil.getChar('a', foundArr), currKey);
-		stringUtil.setChar('b', stringUtil.getChar('b', foundArr), currKey);
-		stringUtil.setChar('d', stringUtil.getChar('d', foundArr), currKey);
-		stringUtil.setChar('e', stringUtil.getChar('e', foundArr), currKey);
-		stringUtil.setChar('f', stringUtil.getChar('f', foundArr), currKey);
-		stringUtil.setChar('h', stringUtil.getChar('h', foundArr), currKey);
-		stringUtil.setChar('i', stringUtil.getChar('i', foundArr), currKey);
-		stringUtil.setChar('m', stringUtil.getChar('m', foundArr), currKey);
-		stringUtil.setChar('n', stringUtil.getChar('n', foundArr), currKey);
-		stringUtil.setChar('o', stringUtil.getChar('o', foundArr), currKey);
-		stringUtil.setChar('r', stringUtil.getChar('r', foundArr), currKey);
-		stringUtil.setChar('s', stringUtil.getChar('s', foundArr), currKey);
-		stringUtil.setChar('t', stringUtil.getChar('t', foundArr), currKey);
-		stringUtil.setChar('u', stringUtil.getChar('u', foundArr), currKey);
-		stringUtil.setChar('w', stringUtil.getChar('w', foundArr), currKey);
-		stringUtil.setChar('y', stringUtil.getChar('y', foundArr), currKey);
+		// The known letters only need to be set once.
+		// Insert the remaining guesses into this array later on.
+		stringUtil.setChar('a', stringUtil.getChar('a', knownLetters), currKey);
+		stringUtil.setChar('b', stringUtil.getChar('b', knownLetters), currKey);
+		stringUtil.setChar('c', stringUtil.getChar('c', knownLetters), currKey);
+		stringUtil.setChar('d', stringUtil.getChar('d', knownLetters), currKey);
+		stringUtil.setChar('e', stringUtil.getChar('e', knownLetters), currKey);
+		stringUtil.setChar('f', stringUtil.getChar('f', knownLetters), currKey);
+		stringUtil.setChar('g', stringUtil.getChar('g', knownLetters), currKey);
+		stringUtil.setChar('h', stringUtil.getChar('h', knownLetters), currKey);
+		stringUtil.setChar('i', stringUtil.getChar('i', knownLetters), currKey);
+		stringUtil.setChar('j', stringUtil.getChar('j', knownLetters), currKey);
+		stringUtil.setChar('k', stringUtil.getChar('k', knownLetters), currKey);
+		stringUtil.setChar('l', stringUtil.getChar('l', knownLetters), currKey);
+		stringUtil.setChar('m', stringUtil.getChar('m', knownLetters), currKey);
+		stringUtil.setChar('n', stringUtil.getChar('n', knownLetters), currKey);
+		stringUtil.setChar('o', stringUtil.getChar('o', knownLetters), currKey);
+		stringUtil.setChar('p', stringUtil.getChar('p', knownLetters), currKey);
+		stringUtil.setChar('q', stringUtil.getChar('q', knownLetters), currKey);
+		stringUtil.setChar('r', stringUtil.getChar('r', knownLetters), currKey);
+		stringUtil.setChar('s', stringUtil.getChar('s', knownLetters), currKey);
+		stringUtil.setChar('t', stringUtil.getChar('t', knownLetters), currKey);
+		stringUtil.setChar('u', stringUtil.getChar('u', knownLetters), currKey);
+		stringUtil.setChar('v', stringUtil.getChar('v', knownLetters), currKey);
+		stringUtil.setChar('w', stringUtil.getChar('w', knownLetters), currKey);
+		stringUtil.setChar('x', stringUtil.getChar('x', knownLetters), currKey);
+		stringUtil.setChar('y', stringUtil.getChar('y', knownLetters), currKey);
+		stringUtil.setChar('z', stringUtil.getChar('z', knownLetters), currKey);
+		System.out.println("currKey is " + new String(currKey));
 		
 		DictionaryUtil dictionaryUtil = new DictionaryUtil();
+		Character[] missingPlainTextCharArr = new Character[missingArr.length];
+		char[] lowercaseArr = stringUtil.getLowerCaseLetters();
+		int index = 0;
+		for (int i=0; i<26; i++)
+		{
+			if (!stringUtil.isLowerCase(currKey[i]))
+			{
+				missingPlainTextCharArr[index] = lowercaseArr[i];
+				index++;
+			}
+		}
 		
 		int guessCount = 0;
 		for (String currGuess : combinationList)
-		{
-			
-			guessCount++;
+		{			
 			if (guessCount % 500000 == 0)
 			{
 				System.out.println("Total guesses tested is " + guessCount);
+				System.out.println("currGuess is " + currGuess + " currKey is " + new String(currKey));
 			}
-			
+			guessCount++;			
+				
 			String potentialDecrypt = decrypt(encryptedText, currGuess, 
-					currKey);
+					currKey, missingPlainTextCharArr);
 			int currCount = dictionaryUtil.getWordCount(potentialDecrypt);
 			if (currCount > bestCount)
 			{
 				bestCount = currCount;
 				decryptedText = potentialDecrypt;
+				bestKey = Arrays.copyOf(currKey, 26);
 				System.out.println(decryptedText);
 				System.out.println("Decrypting, current word count is " + bestCount);
 				System.out.println("reverseKey is " + new String(reverseKey));
@@ -529,13 +633,13 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 	 * @return The decrypted text.
 	 */
 	protected String decrypt(String encryptedText, String currGuess, 
-			char[] currKey)
+			char[] currKey, Character[] missingArr)
 	{
 		// For each of the unknown letters, put the current guess into it,
 		// leaving the letters that are already known.
-		for (int i=0; i< unknownLetterArray.length; i++)
+		for (int i=0; i< missingArr.length; i++)
 		{
-			stringUtil.setChar(unknownLetterArray[i], currGuess.charAt(i), currKey);
+			stringUtil.setChar(missingArr[i], currGuess.charAt(i), currKey);
 		}
 
 		stringUtil.reverseChars(currKey, reverseKey);

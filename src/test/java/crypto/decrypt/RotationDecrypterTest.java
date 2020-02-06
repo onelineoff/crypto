@@ -28,7 +28,7 @@ public class RotationDecrypterTest
 	public void testKidsMessage()
 	{
 
-		String text = "Your message, should you choose to accept it, is to decrypt this text";
+		String text = "Your mission, should you choose to accept it, is to decrypt this text";
 		RotationCipher cipher = new RotationCipher();
 		String encrypted = cipher.encrypt(text);
 		

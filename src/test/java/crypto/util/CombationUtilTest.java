@@ -76,4 +76,32 @@ public class CombationUtilTest {
 		Assert.assertNotNull(retList);
 		Assert.assertEquals(3628800, retList.size());
 	}
+	
+	@Test
+	public void testSixFromTen()
+	{
+		CombinationUtil combinationUtil = new CombinationUtil();
+		Character[] testArr = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
+		List<String> retList = combinationUtil.getCombinations(testArr, 6);
+		for (String str : retList)
+		{
+			Assert.assertEquals(6, str.length());
+		}
+		Assert.assertNotNull(retList);
+		Assert.assertEquals(151200, retList.size());
+	}
+	
+	@Test
+	public void testFourFromTen()
+	{
+		CombinationUtil combinationUtil = new CombinationUtil();
+		Character[] testArr = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
+		List<String> retList = combinationUtil.getCombinations(testArr, 4);
+		for (String str : retList)
+		{
+			Assert.assertEquals(4, str.length());
+		}
+		Assert.assertNotNull(retList);
+		Assert.assertEquals(5040, retList.size());
+	}
 }

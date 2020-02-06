@@ -450,7 +450,12 @@ public class StringUtil
 	
 	public void setChar(char positionChar, char insertChar, char[] arrMap)
 	{
-		setChar(positionChar - 'a', insertChar, arrMap);
+			setChar(positionChar - 'a', insertChar, arrMap);
+	}
+	
+	public void clearChar(char positionChar, char[] arrMap)
+	{
+		arrMap[positionChar - 'a'] = '-';
 	}
 	
 	public void setChar(char positionChar, int insertChar, char[] arrMap)
@@ -459,7 +464,8 @@ public class StringUtil
 	}
 	public void setChar(int index, char insertChar, char[] arrMap)
 	{
-		arrMap[index] = insertChar;
+		if (Character.isLowerCase(insertChar))
+			arrMap[index] = insertChar;
 	}
 	
 	/** Return an array with the inverse mapping.

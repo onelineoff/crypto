@@ -29,4 +29,42 @@ public class SubstitutionDecrypterTest {
 		System.out.println("Total decryption time for substitution cipher is " + 
 		minutes + ":" + (seconds % 60));
 	}
+
+	@Test
+	public void testSmarterBruteForceSearch()
+	{
+		long t1 = System.currentTimeMillis();
+		PlainTextUtil plainTextUtil = new PlainTextUtil();
+		
+		String text = plainTextUtil.getLargePlainText();
+		SubstitutionCipher cipher = new SubstitutionCipher();
+		String encrypted = cipher.encrypt(text);
+		System.out.println(text);
+		System.out.println(encrypted);
+		
+		SubstitutionDecrypter decrypter = new SubstitutionDecrypter(encrypted);
+		String decryptedText = decrypter.smartDecryptText();
+		
+		
+		System.out.println(decryptedText);
+		long t2 = System.currentTimeMillis();
+		System.out.println("Smart decryption time for substitution cipher is " + 
+		(t2 - t1) + " msec");
+	}
+	
+	@Test
+	public void testFindLetters()
+	{
+		PlainTextUtil plainTextUtil = new PlainTextUtil();
+		
+		String text = plainTextUtil.getLargePlainText();
+		SubstitutionCipher cipher = new SubstitutionCipher();
+		String encrypted = cipher.encrypt(text);
+		System.out.println(text);
+		System.out.println(encrypted);
+		
+		SubstitutionDecrypter decrypter = new SubstitutionDecrypter(encrypted);
+		char[] key = decrypter.findLetters();
+		System.out.println(new String(key));
+	}
 }
