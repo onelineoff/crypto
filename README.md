@@ -51,12 +51,10 @@ https://zxing.org/w/decode.jspx -  QR image decoder.
 6. Examine Character vs char, array vs List.
 7. Since foundArr is a central data structure, it should be its own class, with set(), get(), reverse()  methods,
 8. Move code from SubstitutionDecrypter to DictionaryUtil class.
-9. Put TextDecrypter interface back to the way it was before.
-10. Add divide and conquer brute force option.
-11. Test Eclipse install from scratch from maven file.
-12. Some methods in StringUtil should be in DictionaryUtil
-13. Test mvn clean install.
-14. Test mvn javadoc.
+9. Test Eclipse install from scratch from maven file.
+10. Some methods in StringUtil should be in DictionaryUtil
+11. Test mvn clean install.
+12. Test mvn javadoc.
 
 # Caveats
 
