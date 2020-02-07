@@ -1,13 +1,21 @@
 package crypto.decrypt;
 
+import crypto.dto.AlphabetArray;
+
 public class RotationDecrypter extends BaseTextDecrypter implements DecryptText
 {
 	private String encryptedText;
+	private AlphabetArray alphabetArray;
+	private char[] lowercase;
+	private char[] uppercase;
 	
 	public RotationDecrypter(String encryptedText) 
 	{
 		super();
 		this.encryptedText = encryptedText;
+		alphabetArray = new AlphabetArray();
+		lowercase = alphabetArray.getLowerCaseLetters();
+		uppercase = alphabetArray.getUpperCaseLetters();
 	}
 		
 	@Override
@@ -35,18 +43,15 @@ public class RotationDecrypter extends BaseTextDecrypter implements DecryptText
 		char[] charArray = text.toCharArray();
 		int lowerStartIndex = (int) 'a';
 		int upperStartIndex = (int) 'A';
-		
-		char[] lowerCase = stringUtil.getLowerCaseLetters();
-		char[] upperCase = stringUtil.getUpperCaseLetters();
-		
+				
 		char[] rotatedLowerCase = new char[26];
 		char[] rotatedUpperCase = new char[26];
 		
 		for (int i=0; i<26; i++)
 		{
 			int index = (i + rotation) % 26;
-			rotatedLowerCase[index] = lowerCase[i];
-			rotatedUpperCase[index] = upperCase[i];
+			rotatedLowerCase[index] = lowercase[i];
+			rotatedUpperCase[index] = uppercase[i];
 		}
 		
 		for (int i=0; i< charArray.length; i++)

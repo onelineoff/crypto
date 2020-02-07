@@ -1,5 +1,6 @@
 package crypto.encrypt;
 
+import crypto.dto.AlphabetArray;
 import crypto.util.RandomUtil;
 import crypto.util.StringUtil;
 
@@ -13,6 +14,8 @@ import crypto.util.StringUtil;
  *  
  *  Note that this is <b>MUCH</b> harder to solve through brute force
  *  than the Rotation Cipher, about 26! possibilities.
+ *  
+ *  @see <a href="https://en.wikipedia.org/wiki/Substitution_cipher">Substitution Cipher</a>
  *
  */
 public class SubstitutionCipher implements EncryptText
@@ -29,7 +32,7 @@ public class SubstitutionCipher implements EncryptText
 	@Override
 	public String encrypt(String plainText)
 	{
-		char[] lowercase = stringUtil.getLowerCaseLetters();
+		char[] lowercase = new AlphabetArray().getLowerCaseLetters();
 		char[] lowerCaseScrambled = randomUtil.scramble(lowercase);
 		return encrypt(plainText, lowerCaseScrambled);
 	}

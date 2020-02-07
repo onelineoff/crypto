@@ -9,27 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class StringUtilTest
-{
-	@Test
-	public void testLowerCase()
-	{
-		StringUtil stringUtil = new StringUtil();
-		
-		char[] arr = stringUtil.getLowerCaseLetters();
-		String lowerCase = new String(arr);
-		Assert.assertEquals("abcdefghijklmnopqrstuvwxyz", lowerCase);
-	}
-	
-	@Test
-	public void testUpperCase()
-	{
-		StringUtil stringUtil = new StringUtil();
-		
-		char[] arr = stringUtil.getUpperCaseLetters();
-		String upperCase = new String(arr);
-		Assert.assertEquals("ABCDEFGHIJKLMNOPQRSTUVWXYZ", upperCase);
-	}
-	
+{		
 	@Test
 	public void testGetWords()
 	{

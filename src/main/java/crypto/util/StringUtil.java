@@ -9,36 +9,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import crypto.dto.AlphabetArray;
+
 /** Utility methods specifically to support encryption and decryption of text.
  */
 public class StringUtil
-{
-	private static final String lowercaseString = "abcdefghijklmnopqrstuvwxyz";
-	private static final char[] lowercase = lowercaseString.toCharArray();
-	
-	private static final String uppercaseString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	private static final char[] uppercase = uppercaseString.toCharArray();
-	
+{	
 	private FileUtil fileUtil;
+	private AlphabetArray alphabetArray;
+	private char[] lowercase;
 	
 	public StringUtil()
 	{
 		fileUtil = new FileUtil();
-	}
-	
-	public char[] getLowerCaseLetters()
-	{
-		return lowercase;
-	}
-	
-	public char[] getUpperCaseLetters()
-	{
-		return uppercase;
-	}
-	
-	public String getLowerCaseString()
-	{
-		return lowercaseString;
+		alphabetArray = new AlphabetArray();
+		lowercase = alphabetArray.getLowerCaseLetters();
 	}
 	
 	public char[] getUpperCaseArray(char[] input)
