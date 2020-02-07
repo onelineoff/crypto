@@ -44,15 +44,13 @@ https://www.qr-code-generator.com - QR image generator.
 https://zxing.org/w/decode.jspx -  QR image decoder.
 
 # Issues
-1. More comments.  Test javadoc.
+1. More comments.  
 4. Additional unit tests.
 5. Lots of duplicate code. Clean up, and refactor.
 6. Examine Character vs char, array vs List.
 7. Since foundArr is a central data structure, it should be its own class, with set(), get(), reverse()  methods,
 8. Move code from SubstitutionDecrypter to DictionaryUtil class.
-9. Test Eclipse install from scratch from maven file.
 10. Some methods in StringUtil should be in DictionaryUtil
-11. Test mvn clean install.
 12. Test mvn javadoc.
 
 # Caveats

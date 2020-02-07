@@ -4,8 +4,7 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
-/** A utility class for performing random operations on text.
- */
+/** A utility class for performing random operations on text.*/
 public class RandomUtil
 {
 	private SecureRandom sr;
@@ -17,7 +16,7 @@ public class RandomUtil
 	
 	/** Take the array of characters, and randomly rearrange them.
 	 * 
-	 * @param input
+	 * @param input The character array to scramble.
 	 * @return The same characters, but in a random order.
 	 */
 	public char[] scramble(char[] input)
