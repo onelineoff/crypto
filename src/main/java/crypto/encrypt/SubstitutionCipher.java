@@ -12,7 +12,7 @@ import crypto.util.StringUtil;
  *  Preserve case, so if 'a' maps to 'l', 'A' will also map to 'L'.
  *  
  *  Note that this is <b>MUCH</b> harder to solve through brute force
- *  than the Rotation Cipher, about 25! possibilities.
+ *  than the Rotation Cipher, about 26! possibilities.
  *
  */
 public class SubstitutionCipher implements EncryptText
@@ -41,7 +41,7 @@ public class SubstitutionCipher implements EncryptText
 	 * 
 	 * @param plainText The text to be encrypted.
 	 * @param lowerCaseScrambled A mapping from each lower case letter to the substituted letter.
-	 * @return The encypted text.
+	 * @return The encrypted text.
 	 */
 	public String encrypt(String plainText, char[] lowerCaseScrambled)
 	{	

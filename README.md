@@ -5,6 +5,15 @@ This is a project for demonstrating basic historical cryptographic techniques, s
 
 This is primarily meant as a gentle introduction to cryptography, not as usable code.
 
+# Installation
+
+You will need to have both the git, and mvn command line tools installed.  This has been tested with Java 8, git 2.19.1, and Apache mvn 3.6.0.
+
+1. cd to your working directory
+2. git clone https://github.com/onelineoff/crypto.git
+3. mvn clean install
+4. mvn javadoc:javadoc
+
 # Rotation Cipher
 One of the simplest methods of encypting data.  It involves rotating the letters of the alphabet.  For example, the Caeser Cipher rotates by 3, so there is a one to one substituation for each letter, like this:
 `Plain Text      ABCDEFGHIJKLMNOPQRSTUVWXYZ`
@@ -50,8 +59,7 @@ https://zxing.org/w/decode.jspx -  QR image decoder.
 6. Examine Character vs char, array vs List.
 7. Since foundArr is a central data structure, it should be its own class, with set(), get(), reverse()  methods,
 8. Move code from SubstitutionDecrypter to DictionaryUtil class.
-10. Some methods in StringUtil should be in DictionaryUtil
-12. Test mvn javadoc.
+10. Some methods in StringUtil should be in DictionaryUtil.
 
 # Caveats
 

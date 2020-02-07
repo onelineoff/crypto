@@ -5,7 +5,7 @@ import crypto.util.StringUtil;
 
 /** This class uses the Rotation Cipher, of which the Caesar Cipher is one example.
  *  The value to rotate by is selected randomly.
- *  @see https://en.wikipedia.org/wiki/Caesar_cipher
+ *  @see <a href="https://en.wikipedia.org/wiki/Caesar_cipher">Caesar Cipher</a>
  */
 public class RotationCipher implements EncryptText
 {
@@ -19,7 +19,7 @@ public class RotationCipher implements EncryptText
 	}
 	
 	@Override
-	/** Produce encypted text with a random rotation value between 1 and 25.
+	/** Produce encrypted text with a random rotation value between 1 and 25.
 	 *  The encrypted characters will have the same case as the plaintext characters.
 	 *  Characters which are not letters are not encrypted.
 	 *  

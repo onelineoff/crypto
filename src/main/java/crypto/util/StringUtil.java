@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/** Utility methods specifically to support encryption and decryption of text.
+ */
 public class StringUtil
 {
 	private static final String lowercaseString = "abcdefghijklmnopqrstuvwxyz";
@@ -109,7 +111,7 @@ public class StringUtil
 	
 	/** Return a list of the most frequent characters, in descending order.
 	 *  These are the most frequent characters in the English language.
-	 *  @see https://www.rd.com/culture/common-letters-english-language/
+	 *  @see <a href="https://www.rd.com/culture/common-letters-english-language/">Most frequent letters</a>
 	 * 
 	 * @return An ordered list of the most frequent characters, in descending order.
 	 */
@@ -126,7 +128,7 @@ public class StringUtil
 	}
 	
 	/** The most frequent words in English, in descending order.
-	 *  @see https://www.rypeapp.com/most-common-english-words/
+	 *  @see <a href="https://www.rypeapp.com/most-common-english-words/">Most common English words</a>
 	 * @return An ordered list of the most frequent words in English, in descending order.
 	 */
 	public List<String> getMostFrequentWords() 
@@ -140,8 +142,8 @@ public class StringUtil
 	 *  was the same as the popularity of letter 1 multipled by that of letter 2.
 	 *  In fact, e, a, and r are the three most popular letters in English, but
 	 *  bigrams with two of these letters are only 4th, 6th, and 20th most common.
-	 *  @see https://blogs.sas.com/content/iml/2014/09/26/bigrams.html
-	 * @return
+	 *  @see <a href="https://blogs.sas.com/content/iml/2014/09/26/bigrams.html">Bigrams</a>
+	 * @return The list of bigrams, in decreasing order.
 	 */
 	public List<String> getMostFrequentBigrams() 
 	{
@@ -196,6 +198,7 @@ public class StringUtil
 	 *  Note that maps with both characters and string as their keys call this.
 	 * 
 	 * @param inputMap The map to be sorted
+	 * @param <K> The key type, either String or Character.
 	 * @return The sorted map
 	 */
 	public <K> Map<K, Integer> sortByValueDescending(Map<K, Integer> inputMap)
@@ -255,7 +258,7 @@ public class StringUtil
 	/** Get the most common words in the text of a given length.
 	 * 
 	 * @param str The text to be analyzed
-	 * @param length The length of words to be used.
+	 * @param total The total number of words to be returned.
 	 * @return An ordered list in descending order with the results.
 	 */
 	public List<String> getMostCommonWords(String str, int total)
@@ -470,8 +473,8 @@ public class StringUtil
 	
 	/** Return an array with the inverse mapping.
 	 *  The input array is a mapping from plain text to substituted text.
-	 *  So, for example, for the mapping a -> g, b -> d, and c -> l,
-	 *  in the return array, the mapping would be g -> a, d -> b, l -> c
+	 *  So, for example, for the mapping a to g, b to d, and c to l,
+	 *  in the return array, the mapping would be g to a, d to b, l to c
 	 * @param charArr The mapping array, where charArr[0] is a, charArr[1] is b, etc.
 	 * @param reverseArr The array which maps from the substituted text to plain text.
 	 */

@@ -94,6 +94,7 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 	/** Try to find the values of certain letters through analysis.
 	 *  Each of these methods are dependent on the ones before them, 
 	 *  so they should be called through this method.
+	 *  @return A character array of length 26 where the first is the value of a, the second the value for b, etc.
 	 */
 	public char[] findLetters()
 	{
@@ -126,8 +127,8 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 	 *  10! is about 3.6 million, while 6! + 4! is 720 + 24.  Run two brute force tests,
 	 *  and this should complete over 5000 times faster.
 	 *   
-	 * @param knownLetters
-	 * @return
+	 * @param knownLetters An array which contains the known letters.
+	 * @return The decrypted string.
 	 */
 	protected String executeSmarterBruteForceSearch(char[] knownLetters) {
 		System.out.println("knownLetters is       " + new String(knownLetters));
@@ -624,8 +625,8 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 	/** Decrypt the encrypted text, based on the input parameters.
 	 * The basic idea here is that performing the substitution cipher twice will
 	 * decrypt the text if the key mapping is reversed.
-	 * That is, if a -> d, b -> y, and c-> m, then the reverseKey would be
-	 * d -> a, y -> b, and m -> c. 
+	 * That is, if a to d, b to y, and c to m, then the reverseKey would be
+	 * d to a, y to b, and m to c. 
 	 * 
 	 * @param encryptedText The encrypted text.
 	 * @param currGuess This is a guess for the letters that are not yet known.
