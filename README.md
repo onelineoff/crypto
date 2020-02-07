@@ -45,7 +45,6 @@ https://zxing.org/w/decode.jspx -  QR image decoder.
 
 # Issues
 1. More comments.  Test javadoc.
-2. Add pom.xml. 
 4. Additional unit tests.
 5. Lots of duplicate code. Clean up, and refactor.
 6. Examine Character vs char, array vs List.

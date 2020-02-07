@@ -230,7 +230,7 @@ public class StringUtilTest
 		String plainText = plainTextUtils.getLargePlainText();
 		List<Character> mostCommonList = stringUtil.getMostCommonFirstCharacters(plainText, 10);
 		Assert.assertNotNull(mostCommonList);
-		Assert.assertEquals(10, mostCommonList.size());
+		Assert.assertEquals(26, mostCommonList.size());
 		
 		int count = 0;
 		for (Character c : mostCommonList)
