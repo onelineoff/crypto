@@ -20,6 +20,7 @@
         <configuration>
           <show>private</show>
           <nohelp>true</nohelp>
+          <reportOutputDirectory>/home/daw/crypto/javadoc</reportOutputDirectory>
         </configuration>
       </plugin>
     </plugins>

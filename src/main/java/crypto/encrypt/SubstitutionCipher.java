@@ -1,6 +1,6 @@
 package crypto.encrypt;
 
-import crypto.dto.AlphabetArray;
+import crypto.dto.Alphabet;
 import crypto.util.RandomUtil;
 import crypto.util.StringUtil;
 
@@ -32,7 +32,7 @@ public class SubstitutionCipher implements EncryptText
 	@Override
 	public String encrypt(String plainText)
 	{
-		char[] lowercase = new AlphabetArray().getLowerCaseLetters();
+		char[] lowercase = Alphabet.LOWER_CASE;
 		char[] lowerCaseScrambled = randomUtil.scramble(lowercase);
 		return encrypt(plainText, lowerCaseScrambled);
 	}

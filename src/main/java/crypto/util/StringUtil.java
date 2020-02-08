@@ -9,21 +9,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import crypto.dto.AlphabetArray;
+import crypto.dto.Alphabet;
 
 /** Utility methods specifically to support encryption and decryption of text.
  */
 public class StringUtil
 {	
 	private FileUtil fileUtil;
-	private AlphabetArray alphabetArray;
+	private Alphabet alphabet;
 	private char[] lowercase;
 	
 	public StringUtil()
 	{
 		fileUtil = new FileUtil();
-		alphabetArray = new AlphabetArray();
-		lowercase = alphabetArray.getLowerCaseLetters();
+		alphabet = new Alphabet();
+		lowercase = Alphabet.LOWER_CASE;
 	}
 	
 	public char[] getUpperCaseArray(char[] input)

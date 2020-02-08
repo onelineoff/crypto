@@ -1,11 +1,11 @@
 package crypto.decrypt;
 
-import crypto.dto.AlphabetArray;
+import crypto.dto.Alphabet;
 
 public class RotationDecrypter extends BaseTextDecrypter implements DecryptText
 {
 	private String encryptedText;
-	private AlphabetArray alphabetArray;
+	private Alphabet alphabet;
 	private char[] lowercase;
 	private char[] uppercase;
 	
@@ -13,9 +13,9 @@ public class RotationDecrypter extends BaseTextDecrypter implements DecryptText
 	{
 		super();
 		this.encryptedText = encryptedText;
-		alphabetArray = new AlphabetArray();
-		lowercase = alphabetArray.getLowerCaseLetters();
-		uppercase = alphabetArray.getUpperCaseLetters();
+		alphabet = new Alphabet();
+		lowercase = Alphabet.LOWER_CASE;
+		uppercase = Alphabet.UPPER_CASE;
 	}
 		
 	@Override

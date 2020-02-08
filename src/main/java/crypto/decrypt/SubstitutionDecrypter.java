@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import crypto.dto.AlphabetArray;
+import crypto.dto.Alphabet;
 import crypto.encrypt.SubstitutionCipher;
 import crypto.util.CombinationUtil;
 import crypto.util.DictionaryUtil;
@@ -24,7 +24,7 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 	private List<String> fourWordList;
 	private char[] reverseKey;
 	private char[] bestKey;
-	private AlphabetArray alphabetArray;
+	private Alphabet alphabet;
 	
 	public SubstitutionDecrypter(String encryptedText)
 	{
@@ -47,7 +47,7 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 		twoWordList = stringUtil.getMostCommonWords(lowerCaseText, 2, 50);
 		threeWordList = stringUtil.getMostCommonWords(lowerCaseText, 3, 50);
 		fourWordList = stringUtil.getMostCommonWords(lowerCaseText, 4, 50);
-		alphabetArray = new AlphabetArray();
+		alphabet = new Alphabet();
 	}
 
 	@Override
@@ -178,6 +178,7 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 	 *  
 	 *  On my home computer, 10 unknown letter takes about 8.5 minutes to guess.
 	 *  
+	 *  @param knownLetters An array of the letters already known.
 	 * @return The decrypted text.
 	 */
 	protected String executeBruteForceSearch(char[] knownLetters) {
@@ -185,9 +186,9 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 		System.out.println("knownLetters size is " + knownLetters.length);
 		System.out.println(new String(knownLetters));
 		
-		// First, put all missing letters into the list.
+		// First, put all lower case letters into the list.
 		List<Character> missingLetters = new ArrayList<>();
-		char[] lowercase = alphabetArray.getLowerCaseLetters();
+		char[] lowercase = Alphabet.LOWER_CASE;
 		for (Character c : lowercase)
 		{
 			missingLetters.add(c);
@@ -246,7 +247,7 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 		
 		DictionaryUtil dictionaryUtil = new DictionaryUtil();
 		Character[] missingPlainTextCharArr = new Character[missingArr.length];
-		char[] lowercaseArr = alphabetArray.getLowerCaseLetters();
+		char[] lowercaseArr = Alphabet.LOWER_CASE;
 		int index = 0;
 		for (int i=0; i<26; i++)
 		{
@@ -633,7 +634,8 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 	 * 
 	 * @param encryptedText The encrypted text.
 	 * @param currGuess This is a guess for the letters that are not yet known.
-	 * @param currKey This contains all the known letters.  It is updated from currGuess.	 * 
+	 * @param currKey This contains all the known letters.  It is updated from currGuess.
+	 * @param missingArr The characters that are still to be determined.	 
 	 * @return The decrypted text.
 	 */
 	protected String decrypt(String encryptedText, String currGuess, 

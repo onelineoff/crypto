@@ -1,6 +1,6 @@
 package crypto.encrypt;
 
-import crypto.dto.AlphabetArray;
+import crypto.dto.Alphabet;
 import crypto.util.RandomUtil;
 
 /** This class uses the Rotation Cipher, of which the Caesar Cipher is one example.
@@ -10,12 +10,10 @@ import crypto.util.RandomUtil;
 public class RotationCipher implements EncryptText
 {
 	private RandomUtil randomUtil;
-	private AlphabetArray alphabetArray;
 	
 	public RotationCipher()
 	{
 		randomUtil = new RandomUtil();
-		alphabetArray = new AlphabetArray();
 	}
 	
 	@Override
@@ -48,14 +46,14 @@ public class RotationCipher implements EncryptText
 			return plainText;
 		
 		// First, get the map of rotated letters, both lower and upper case.
-		char[] lowercase = alphabetArray.getLowerCaseLetters();
+		char[] lowercase = Alphabet.LOWER_CASE;
 		
 		// This produces the rotation map.
 		char[] lowerCaseRotated = rotate(lowercase, offset);
 		
 		// Don't call rotate() again, or the lower case and upper case characters
 		// will be rotated by a different amount.
-		AlphabetArray rotatedArray = new AlphabetArray(lowerCaseRotated);
+		Alphabet rotatedArray = new Alphabet(lowerCaseRotated);
 		char[] upperCaseRotated = rotatedArray.convertToUpperCase();
 		
 		int length = plainText.length();

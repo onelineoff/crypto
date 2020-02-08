@@ -9,7 +9,7 @@ In addition, it is assumed that the text is in English, or at least a language t
 
 # Installation
 
-You will need to have both the git, and mvn command line tools installed.  This has been tested with Java 8, git 2.19.1, and Apache mvn 3.6.0.
+You will need to have both the git, and mvn command line tools installed.  This has been tested with Java 8, git 2.19.1, and Apache maven 3.6.0.
 
 1. cd to your working directory
 2. git clone https://github.com/onelineoff/crypto.git
@@ -53,8 +53,6 @@ This can be further refined by breaking up the brute force search into two steps
 
 Stegnography is the science of hiding information where it is not plainly visible.  There are many examples of this, going back to ancient Greece, when a man had his hair shaved, a messaged tattooed on his scalp,  and waited for the hair to grow back enough to hide the message.
 
-
-
 Some physical techniques include hidden ink, and embedding messages in knitting patterns.
 
 More modern examples include embedding hidden messages in audio or video files.
@@ -63,9 +61,7 @@ More modern examples include embedding hidden messages in audio or video files.
 
 # Encoding
 
-Encoding is different from encryption, in that the information is not human readable, but there is no secret key; so the message can be encoded or decoded according to well known rules.  QR codes are an example of this.  A QR code can encode several thousand characters worth of data. Information can be hidden from the average person, but can be easily viewed by anyone who decodes the image, often with an app on a phone or tablet.
-
-
+Encoding is different from encryption, in that the information is not easily human readable, but there is no secret key; the message can be encoded or decoded according to well known rules.  QR codes are an example of this.  A QR code can encode several thousand characters worth of data. Information can be hidden from the average person, but can be easily viewed by anyone who decodes the image, often with an app on a phone or tablet.
 
 Messages can also be encoded before being encrypted, to defeat some of the simplistic decryption techniques used in this code sample.
 
@@ -76,6 +72,8 @@ https://en.wikipedia.org/wiki/Caesar_cipher
 https://en.wikipedia.org/wiki/Substitution_cipher
 
 https://en.wikipedia.org/wiki/Steganography
+
+https://en.wikipedia.org/wiki/QR_code
 
 https://www.qr-code-generator.com - QR image generator.
 https://zxing.org/w/decode.jspx -  QR image decoder.
@@ -95,3 +93,6 @@ This is demonstration code, not meant to be useful in any practical way.  As a c
 
 Also, some type of logging library, such as log4j or slf4j, would normally be used.  System.out.println() is used for simplicity.
 
+The code is of fair, not great quality.  There should be more comments, unit tests, and general refactoring and cleanup.
+
+The assumption that the plaintext is in English is embedded throughout the code, and would require major refactoring to remove.  It is not intended that this code is ever used for anything except demonstration purposes, so I decided not to introduce the extra complexity.
