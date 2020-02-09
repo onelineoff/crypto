@@ -2,6 +2,7 @@ package crypto.decrypt;
 
 import org.junit.Test;
 
+import crypto.dto.Alphabet;
 import crypto.encrypt.SubstitutionCipher;
 import crypto.util.PlainTextUtil;
 
@@ -64,7 +65,7 @@ public class SubstitutionDecrypterTest {
 		System.out.println(encrypted);
 		
 		SubstitutionDecrypter decrypter = new SubstitutionDecrypter(encrypted);
-		char[] key = decrypter.findLetters();
-		System.out.println(new String(key));
+		Alphabet key = decrypter.findLetters();
+		System.out.println(key.getString());
 	}
 }

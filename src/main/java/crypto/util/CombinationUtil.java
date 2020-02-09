@@ -7,6 +7,17 @@ import java.util.Set;
 
 public class CombinationUtil {
 
+	public List<String> getCombinations(char[] arr)
+	{
+		Character[] charArr = new Character[arr.length];
+		for (int i=0; i< arr.length; i++)
+		{
+			charArr[i] = arr[i];
+		}
+			
+		return getCombinations(charArr);
+	}
+	
 	public List<String> getCombinations(Character[] arr) 
 	{
 		List<String> list = new ArrayList<>();

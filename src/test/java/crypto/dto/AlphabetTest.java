@@ -74,6 +74,13 @@ public class AlphabetTest {
 	}
 	
 	@Test
+	public void testGetSize()
+	{
+		Alphabet alphabet = new Alphabet("mv-rz--cefBOIjkl-p-wxyns-u".toCharArray());
+		Assert.assertEquals(20, alphabet.size());
+	}
+	
+	@Test
 	public void testSetChars()
 	{
 		Alphabet alphabet = new Alphabet("mv-rz--cefBOIjkl-p-wxyns-u".toCharArray());

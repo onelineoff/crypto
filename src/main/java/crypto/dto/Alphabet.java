@@ -61,6 +61,17 @@ public class Alphabet {
 		}
 	}
 	
+	public Alphabet(Alphabet src)
+	{
+		this(src.letters);
+	}
+	
+	public void set(char[] srcLetters)
+	{
+		for (int i=0; i<26; i++)
+			this.letters[i] = srcLetters[i];
+	}
+	
 	/** Get the character array represented by this object.
 	 * 
 	 * @return The char[26] array with the letters from 'a' to 'z'.
@@ -73,6 +84,20 @@ public class Alphabet {
 	public String getString()
 	{
 		return new String(letters);
+	}
+	
+	/** Get the number of characters that are letters.
+	 * 
+	 * @return The number of letters.
+	 */
+	public int size()
+	{
+		int count = 0;
+		for (char c : letters)
+			if (Character.isLetter(c))
+				count++;
+		
+		return count;
 	}
 	
 	/** Return the letters are an upper case array.
@@ -106,7 +131,18 @@ public class Alphabet {
 		letters[position] = SENTINEL;
 	}
 	
+	public char getChar(char c)
+	{
+		return getChar(c - 'a');
+	}
+	
+	public char getChar(int position)
+	{
+		return letters[position];
+	}
+	
 	/** Set a character in the alphabet.
+	 *  If the character to be inserted is not a letter, this method does nothing.
 	 * 
 	 * @param positionChar The position of the character to be set.
 	 * @param insertChar The character to be set.
@@ -115,8 +151,8 @@ public class Alphabet {
 	{
 		if (Character.isUpperCase(positionChar))
 			positionChar = Character.toLowerCase(positionChar);	
-		
-		letters[positionChar - 'a'] = insertChar;
+		else if (Character.isLowerCase(positionChar))
+			letters[positionChar - 'a'] = insertChar;
 	}
 	
 	/** Set a character in the alphabet.
@@ -179,5 +215,21 @@ public class Alphabet {
 		}
 		
 		return reverseLetters;
+	}
+	
+	/** Determine if the character at the specified position matches the input char.
+	 * 
+	 * @param position The position to be checked.
+	 * @param c The char to be checked.
+	 * @return true if c is set at the specifie position, or false.
+	 */
+	public boolean isMatch(int position, char c)
+	{
+		return letters[position] == c;
+	}
+	
+	public boolean isMatch(char position, char c)
+	{
+		return isMatch(position - 'a', c);
 	}
 }
