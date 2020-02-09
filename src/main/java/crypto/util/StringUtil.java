@@ -450,6 +450,7 @@ public class StringUtil
 	{
 		setChar(positionChar - 'a', lowercase[insertChar], arrMap);
 	}
+	
 	public void setChar(int index, char insertChar, char[] arrMap)
 	{
 		if (Character.isLowerCase(insertChar))

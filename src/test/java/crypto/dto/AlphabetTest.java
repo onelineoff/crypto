@@ -25,19 +25,35 @@ public class AlphabetTest {
 	@Test
 	public void testClearChar()
 	{
-		
+		Alphabet alphabet = new Alphabet(Alphabet.LOWER_CASE);
+		Assert.assertTrue(Arrays.equals(Alphabet.LOWER_CASE, alphabet.getCharArray()));
+		alphabet.clearChar('a');
+		Assert.assertEquals("-bcdefghijklmnopqrstuvwxyz", alphabet.getString());
+		alphabet.clearChar('D');
+		alphabet.clearChar('Q');
+		alphabet.clearChar('T');
+		alphabet.clearChar('g');
+		alphabet.clearChar('h');
+		Assert.assertTrue("-bc-ef--ijklmnop-rs-uvwxyz".equals(alphabet.getString()));
 	}
 	
 	@Test
 	public void testConvertToUpperCase()
 	{
-		
+		Alphabet alphabet = new Alphabet("-bc-ef--ijklmnop-rs-uvwxyz".toCharArray());
+		char[] arr = alphabet.convertToUpperCase();
+		String expectedOutput = "-BC-EF--IJKLMNOP-RS-UVWXYZ";
+		Assert.assertEquals(expectedOutput, alphabet.getString());
+		Assert.assertEquals(expectedOutput, new String(arr));
 	}
 
 	@Test
 	public void testGetMissingLetters()
 	{
-		
+		Alphabet alphabet = new Alphabet("-bc-ef--ijklmnop-rs-uvwxyz".toCharArray());
+		char[] missing = alphabet.getMissingLetters();
+		char[] expected = "adghqt".toCharArray();
+		Assert.assertTrue(Arrays.equals(expected, missing));
 	}
 	
 	@Test
@@ -54,13 +70,27 @@ public class AlphabetTest {
 		
 		Alphabet reverseAlphabet = new Alphabet(reverseArr);
 		char[] restoreArr = reverseAlphabet.getReverseChars();
-		System.out.println(new String(restoreArr));
 		Assert.assertTrue(Arrays.equals(restoreArr, charArr));
 	}
 	
 	@Test
 	public void testSetChars()
 	{
+		Alphabet alphabet = new Alphabet("mv-rz--cefBOIjkl-p-wxyns-u".toCharArray());
+		char[] missing = alphabet.getMissingLetters();
+		char[] expected = "adghqt".toCharArray();
+		Assert.assertTrue(Arrays.equals(expected, missing));
 		
+		alphabet.setChar('c', 'q');
+		expected = "adght".toCharArray();
+		missing = alphabet.getMissingLetters();
+		Assert.assertTrue(Arrays.equals(expected, missing));
+		Assert.assertEquals("mvqrz--cefBOIjkl-p-wxyns-u", alphabet.getString());
+		
+		alphabet.setChar('a', 'v');
+		alphabet.setChar('b', 'm');
+		missing = alphabet.getMissingLetters();
+		Assert.assertTrue(Arrays.equals(expected, missing));
+		Assert.assertEquals("vmqrz--cefBOIjkl-p-wxyns-u", alphabet.getString());
 	}
 }

@@ -70,6 +70,11 @@ public class Alphabet {
 		return letters;
 	}
 	
+	public String getString()
+	{
+		return new String(letters);
+	}
+	
 	/** Return the letters are an upper case array.
 	 * 
 	 * @return An upper case array.
@@ -126,36 +131,34 @@ public class Alphabet {
 	
 	/** Return all the lower case letters not in the input array.
 	 * 
-	 * @param knownLetters The known letters.
 	 * @return An array of lower case letters not in the input array.
 	 */
-	public char[] getMissingLetters(char[] knownLetters)
+	public char[] getMissingLetters()
 	{
-		int retLength = 26 - knownLetters.length;
-		char[] retArr = new char[retLength];
+		List<Character> missingCharList = new ArrayList<>();
+		for (char c : LOWER_CASE)
+			missingCharList.add(c);
 		
-		List<Character> missingLetters = new ArrayList<>();
-		char[] lowercase = LOWER_CASE;
-		for (Character c : lowercase)
+		for (int i=0; i<26; i++)
 		{
-			missingLetters.add(c);
-		}
-		
-		for (Character c : knownLetters)
-		{
-			if (Character.isUpperCase(c))
-				c = Character.toLowerCase(c);
-			
-			if ((c >= 'a' && c<= 'z'))
+			if (Character.isLowerCase(letters[i]))
 			{
-				missingLetters.remove(c);
+				Character c2 = new Character(letters[i]);
+				missingCharList.remove(c2);
+			}		
+			else if (Character.isUpperCase(letters[i]))
+			{
+				Character c2 = new Character(Character.toLowerCase(letters[i]));
+				missingCharList.remove(c2);
 			}
 		}
 		
-		// Can't use missingLetters.toArray(char[])
-		for (int i=0; i<missingLetters.size(); i++)
+		char[] retArr = new char[missingCharList.size()];
+		int index = 0;
+		for (char c : missingCharList)
 		{
-			retArr[i] = missingLetters.get(i);
+			retArr[index] = c;
+			index++;
 		}
 		
 		return retArr;
