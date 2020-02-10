@@ -6,7 +6,8 @@ import crypto.dto.Alphabet;
 import crypto.encrypt.SubstitutionCipher;
 import crypto.util.PlainTextUtil;
 
-public class SubstitutionDecrypterTest {
+public class SubstitutionDecrypterTest 
+{
 	@Test
 	public void testSubstitutionDecryption()
 	{

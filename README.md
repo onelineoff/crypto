@@ -17,7 +17,7 @@ You will need to have both the git, and mvn command line tools installed.  This 
 4. mvn javadoc:javadoc
 
 # Rotation Cipher
-One of the simplest methods of encypting data.  It involves rotating the letters of the alphabet.  For example, the Caeser Cipher rotates by 3, so there is a one to one substituation for each letter, like this:
+One of the simplest methods of encypting data.  It involves rotating the letters of the alphabet.  For example, the Caesar Cipher rotates by 3, so there is a one to one substitution for each letter, like this:
 `Plain Text      ABCDEFGHIJKLMNOPQRSTUVWXYZ`
 `Encrypted Text  DEFGHIJKLMNOPQRSTUVWXYXABC`
 

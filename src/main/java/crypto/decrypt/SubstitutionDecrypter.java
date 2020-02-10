@@ -180,6 +180,11 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 		System.out.println("knownLetters size is " + knownLetters.size());
 		
 		char[] missingArray = knownLetters.getMissingLetters();
+		System.out.println("missing letters are " + new String(missingArray));
+		
+		char[] missingArrayByPosition = knownLetters.getMissingLettersByPosition();
+		System.out.println("missing letters by position are " + 
+				new String(missingArrayByPosition));
 
 		CombinationUtil combinationUtil = new CombinationUtil();
 		List<String> combinationList = combinationUtil.getCombinations(missingArray);
@@ -203,7 +208,7 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 			guessCount++;			
 				
 			String potentialDecrypt = decrypt(encryptedText, currGuess, 
-					currKey, missingArray);
+					currKey, missingArrayByPosition);
 			int currCount = dictionaryUtil.getWordCount(potentialDecrypt);
 			if (currCount > bestCount)
 			{
@@ -212,6 +217,7 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 				bestKey = new Alphabet(currKey);
 				System.out.println(decryptedText);
 				System.out.println("Decrypting, current word count is " + bestCount);
+				System.out.println("currKey is " + currKey.getString());
 				System.out.println("reverseKey is " + reverseKey.getString());				
 			}
 		}
@@ -546,7 +552,8 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 	 * @param encryptedText The encrypted text.
 	 * @param currGuess This is a guess for the letters that are not yet known.
 	 * @param currKey This contains all the known letters.  It is updated from currGuess.
-	 * @param missingArr The characters that are still to be determined.	 
+	 * @param missingArr The position of the characters that are still to be determined.	
+	 *  
 	 * @return The decrypted text.
 	 */
 	protected String decrypt(String encryptedText, String currGuess, 
@@ -554,6 +561,7 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 	{
 		// For each of the unknown letters, put the current guess into it,
 		// leaving the letters that are already known.
+		int position = 0;
 		for (int i=0; i< missingArr.length; i++)
 		{
 			currKey.setChar(missingArr[i], currGuess.charAt(i));

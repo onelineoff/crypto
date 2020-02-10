@@ -151,7 +151,7 @@ public class Alphabet {
 	{
 		if (Character.isUpperCase(positionChar))
 			positionChar = Character.toLowerCase(positionChar);	
-		else if (Character.isLowerCase(positionChar))
+		if (Character.isLowerCase(positionChar))
 			letters[positionChar - 'a'] = insertChar;
 	}
 	
@@ -165,9 +165,14 @@ public class Alphabet {
 		letters[position] = insertChar;
 	}
 	
-	/** Return all the lower case letters not in the input array.
-	 * 
-	 * @return An array of lower case letters not in the input array.
+	/** Return the missing letters.
+	 *  This method returns the lower case letters that are not in the array.
+	 *  So, if the letters array starts with b, -, d, -
+	 *  the missing letters are a and c.
+	 *  
+	 *  @see #getMissingLettersByPosition()
+	 *  
+	 * @return The missing letters.
 	 */
 	public char[] getMissingLetters()
 	{
@@ -190,6 +195,38 @@ public class Alphabet {
 		}
 		
 		char[] retArr = new char[missingCharList.size()];
+		int index = 0;
+		for (char c : missingCharList)
+		{
+			retArr[index] = c;
+			index++;
+		}
+		
+		return retArr;
+	}
+	
+	/** Return all the lower case letters not in the input array.
+	 *  This is finding missing letters by position in the array,
+	 *  not the actual letters that are not stored in the array.
+	 *  So, if the letters array starts with b, -, d, -
+	 *  The missing letters are b and d, because the second and
+	 *  fourth spots (indices 1 and 3) are missing.
+	 *  
+	 * @return An array of lower case letters not in the input array.
+	 */
+	public char[] getMissingLettersByPosition()
+	{
+		List<Character> missingCharList = new ArrayList<>();
+		
+		for (int i=0; i<26; i++)
+		{
+			if (letters[i]  == SENTINEL)
+				missingCharList.add(LOWER_CASE[i]);
+		}
+		
+		char[] retArr = new char[missingCharList.size()];
+		
+		// Convert Character to char.
 		int index = 0;
 		for (char c : missingCharList)
 		{
