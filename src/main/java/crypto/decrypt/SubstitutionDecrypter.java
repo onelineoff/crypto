@@ -7,20 +7,33 @@ import crypto.encrypt.SubstitutionCipher;
 import crypto.util.CombinationUtil;
 import crypto.util.DictionaryUtil;
 
+/** Attempt to decrypt text encrypted using the substitution cipher.
+ *  There are a number of assumptions that have been made here.
+ * <UL>
+ * <LI>A single character substitution was used.
+ * <LI>The plaintext primarily consists of English words.
+ * <LI>There are spaces between each word.
+ * <LI>Most of the words would appear in an English language dictionary.
+ * </UL>
+ * 
+ * This code is of no practical use, and is meant as a demonstration of simple 
+ * cryptographic techniques.
+ *
+ */
 public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptText
 {
-	/** These are the letters not guessed from text analysis.*/
 	private String encryptedText;
+	/** An ordered list of the most common characters in the encrypted text, in descending order.*/
 	private List<Character> commonCharList;
+	/** This contains the part of the decryption key that has been found so far.*/
 	private Alphabet foundArr;
-	private String lowerCaseText;
+	/** Most common bigrams, in decreasing order.*/
 	private List<String> bigramList;
 	private List<Character>charList;
 	private List<String> wordList;
 	private List<String> twoWordList;
 	private List<String> threeWordList;
 	private List<String> fourWordList;
-	private Alphabet reverseKey;
 	private Alphabet bestKey;
 		
 	public SubstitutionDecrypter(String encryptedText)
@@ -29,14 +42,11 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 		this.encryptedText = encryptedText;
 		commonCharList = stringUtil.getMostCommonCharacters(encryptedText, 10);		
 		
-		// The character to substitute is at each position, e.g, if foundArr[3] == 'g', then g is 
-		// substituted for d to decrypt.  This is meant for definite matches.
 		foundArr = new Alphabet();
 		
-		reverseKey = new Alphabet();
 		bestKey = new Alphabet();
 
-		lowerCaseText = encryptedText.toLowerCase();
+		String lowerCaseText = encryptedText.toLowerCase();
 		bigramList = stringUtil.getMostCommonBigrams(lowerCaseText, 20);
 		charList = stringUtil.getMostCommonCharacters(lowerCaseText, 26);
 		wordList = stringUtil.getMostCommonWords(lowerCaseText, 50);
@@ -80,6 +90,12 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 		return decryptedText;
 	}
 	
+	/** Execute decryption using a more efficient technique than brute force.
+	 *  Find the 16 letters that can be searched for easily.  Then call the
+	 *  more efficient decryption algorithm.
+	 *  
+	 * @return The decrypted plaintext.
+	 */
 	public String smartDecryptText()
 	{
 		findLetters();
@@ -92,7 +108,8 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 	/** Try to find the values of certain letters through analysis.
 	 *  Each of these methods are dependent on the ones before them, 
 	 *  so they should be called through this method.
-	 *  @return A character array of length 26 where the first is the value of a, the second the value for b, etc.
+	 *  
+	 *  @return A character array of length 26 where the first letter is the value of a, the second the value for b, etc.
 	 */
 	public Alphabet findLetters()
 	{
@@ -192,10 +209,9 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 		int bestCount = 0;
 		Alphabet currKey = new Alphabet(knownLetters);
 		
-		System.out.println("currKey is " + currKey.getString());
-		
 		DictionaryUtil dictionaryUtil = new DictionaryUtil();
 		
+		Alphabet reverseKey = new Alphabet();
 		int guessCount = 0;
 		for (String currGuess : combinationList)
 		{			
@@ -208,8 +224,9 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 			guessCount++;			
 				
 			String potentialDecrypt = decrypt(encryptedText, currGuess, 
-					currKey, missingArrayByPosition);
+					currKey, missingArrayByPosition, reverseKey);
 			int currCount = dictionaryUtil.getWordCount(potentialDecrypt);
+			
 			if (currCount > bestCount)
 			{
 				bestCount = currCount;
@@ -552,16 +569,16 @@ public class SubstitutionDecrypter extends BaseTextDecrypter implements DecryptT
 	 * @param encryptedText The encrypted text.
 	 * @param currGuess This is a guess for the letters that are not yet known.
 	 * @param currKey This contains all the known letters.  It is updated from currGuess.
-	 * @param missingArr The position of the characters that are still to be determined.	
+	 * @param missingArr The position of the characters that are still to be determined.
+	 * @param reverseKey The reversed key, i.e., the key that will decrypt using the substitution cipher.	
 	 *  
 	 * @return The decrypted text.
 	 */
 	protected String decrypt(String encryptedText, String currGuess, 
-			Alphabet currKey, char[] missingArr)
+			Alphabet currKey, char[] missingArr, Alphabet reverseKey)
 	{
 		// For each of the unknown letters, put the current guess into it,
 		// leaving the letters that are already known.
-		int position = 0;
 		for (int i=0; i< missingArr.length; i++)
 		{
 			currKey.setChar(missingArr[i], currGuess.charAt(i));

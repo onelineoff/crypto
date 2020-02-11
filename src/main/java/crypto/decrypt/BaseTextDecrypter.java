@@ -6,8 +6,7 @@ import java.util.Set;
 import crypto.util.DictionaryUtil;
 import crypto.util.StringUtil;
 
-/** Useful base class for text decrypters.
- */
+/** Useful base class for text decrypters.*/
 public class BaseTextDecrypter {
 	protected Set<String> dictionaryWords = null;
 	protected StringUtil stringUtil;
