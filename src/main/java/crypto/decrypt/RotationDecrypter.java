@@ -1,17 +1,25 @@
-package davidweiss.crypto.decrypt;
+package crypto.decrypt;
 
-import java.util.Set;
+import crypto.dto.Alphabet;
 
-import davidweiss.crypto.util.DictionaryUtil;
-import davidweiss.crypto.util.StringUtil;
-
-
-public class RotationDecrypter implements DecryptText
+public class RotationDecrypter extends BaseTextDecrypter implements DecryptText
 {
-	private Set<String> dictionaryWords = null;
+	private String encryptedText;
+	private Alphabet alphabet;
+	private char[] lowercase;
+	private char[] uppercase;
 	
+	public RotationDecrypter(String encryptedText) 
+	{
+		super();
+		this.encryptedText = encryptedText;
+		alphabet = new Alphabet();
+		lowercase = Alphabet.LOWER_CASE;
+		uppercase = Alphabet.UPPER_CASE;
+	}
+		
 	@Override
-	public String decryptText(String encryptedText)
+	public String decryptText()
 	{
 		String plainText = encryptedText;
 		int matches = getMatchCount(plainText);
@@ -35,18 +43,15 @@ public class RotationDecrypter implements DecryptText
 		char[] charArray = text.toCharArray();
 		int lowerStartIndex = (int) 'a';
 		int upperStartIndex = (int) 'A';
-		
-		char[] lowerCase = StringUtil.getLowerCaseLetters();
-		char[] upperCase = StringUtil.getUpperCaseLetters();
-		
+				
 		char[] rotatedLowerCase = new char[26];
 		char[] rotatedUpperCase = new char[26];
 		
 		for (int i=0; i<26; i++)
 		{
 			int index = (i + rotation) % 26;
-			rotatedLowerCase[index] = lowerCase[i];
-			rotatedUpperCase[index] = upperCase[i];
+			rotatedLowerCase[index] = lowercase[i];
+			rotatedUpperCase[index] = uppercase[i];
 		}
 		
 		for (int i=0; i< charArray.length; i++)
@@ -67,29 +72,5 @@ public class RotationDecrypter implements DecryptText
 		return new String(charArray);
 	}
 	
-	private int getMatchCount(String text)
-	{
-		if (dictionaryWords == null)
-			dictionaryWords = DictionaryUtil.getWords();
-		
-		int count = 0;
-		
-		String[] words = getWords(text);
-		for (String word : words)
-		{
-			word = word.toLowerCase();
-			if (dictionaryWords.contains(word))
-				count++;
-		}
-		
-		return count;
-		
-	}
-	
-	private String[] getWords(String text)
-	{
-		String[] words = text.split(" ");
-		return words;
-	}
 
 }

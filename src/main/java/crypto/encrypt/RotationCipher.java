@@ -1,22 +1,44 @@
-package davidweiss.crypto.encrypt;
+package crypto.encrypt;
 
-import davidweiss.crypto.util.RandomUtil;
-import davidweiss.crypto.util.StringUtil;
+import crypto.dto.Alphabet;
+import crypto.util.RandomUtil;
 
+/** This class uses the Rotation Cipher, of which the Caesar Cipher is one example.
+ *  The value to rotate by is selected randomly.
+ *  @see <a href="https://en.wikipedia.org/wiki/Caesar_cipher">Caesar Cipher</a>
+ */
 public class RotationCipher implements EncryptText
 {
-
+	private RandomUtil randomUtil;
+	
+	public RotationCipher()
+	{
+		randomUtil = new RandomUtil();
+	}
+	
 	@Override
+	/** Produce encrypted text with a random rotation value between 1 and 25.
+	 *  The encrypted characters will have the same case as the plaintext characters.
+	 *  Characters which are not letters are not encrypted.
+	 *  
+	 *  @param plainText The text to be encrypted.
+	 */
 	public String encrypt(String plainText)
 	{
-		int offset = 0;
-		while (offset == 0)
-			offset = RandomUtil.getInt(26);
+		int offset = randomUtil.getInt(26);
 		
 		return encrypt(plainText, offset);
 	}
 
-	protected String encrypt(String plainText, int offset)
+	/** Produced encrypted text with the specified rotation value.
+	 *  The encrypted characters will have the same case as the plaintext characters.
+	 *  Characters which are not letters are not encrypted.
+	 * 
+	 * @param plainText The text to be encrypted.
+	 * @param offset The rotation value.
+	 * @return The encrypted text.
+	 */
+	public String encrypt(String plainText, int offset)
 	{
 		if (plainText == null)
 			return plainText;
@@ -24,9 +46,15 @@ public class RotationCipher implements EncryptText
 			return plainText;
 		
 		// First, get the map of rotated letters, both lower and upper case.
-		char[] lowercase = StringUtil.getLowerCaseLetters();
+		char[] lowercase = Alphabet.LOWER_CASE;
+		
+		// This produces the rotation map.
 		char[] lowerCaseRotated = rotate(lowercase, offset);
-		char[] upperCaseRotated = StringUtil.getUpperCaseArray(lowerCaseRotated);
+		
+		// Don't call rotate() again, or the lower case and upper case characters
+		// will be rotated by a different amount.
+		Alphabet rotatedArray = new Alphabet(lowerCaseRotated);
+		char[] upperCaseRotated = rotatedArray.convertToUpperCase();
 		
 		int length = plainText.length();
 		char[] input = plainText.toCharArray();
@@ -35,6 +63,9 @@ public class RotationCipher implements EncryptText
 		int lowerStartIndex = (int) 'a';
 		int upperStartIndex = (int) 'A';
 		
+		// Process each character, encrypting lower case letters as lower case,
+		// upper case letters as upper case,
+		// and the remaining characters unchanged.
 		for (int i=0; i<length; i++)
 		{
 			char c = input[i];
@@ -47,26 +78,30 @@ public class RotationCipher implements EncryptText
 			{
 				int index = (int) c - upperStartIndex;
 				c = upperCaseRotated[index];
-			}
-			// If the character isn't a letter, leave it unchanged.
-
+			}	
+			
 			output[i] = c;
 		}
 		
 		return new String(output);
 	}
 	
-	protected static char[] rotate(char[] input, int offset)
+	/** Rotate the characters by the specified amount.
+	 * 
+	 * @param input The characters to be rotated.
+	 * @param offset The amount of the rotation.
+	 * @return The character array rotated by the specified amount.
+	 */	
+	protected char[] rotate(char[] input, int offset)
 	{
 		// Make sure the input at least two characters. 
-		if (input == null)
-			return input;
-		else if (input.length < 2)
+		if (input == null || input.length < 2)
 			return input;
 		
 		int length = input.length;
 		char[] output = new char[length];
 		
+		// Make sure you understand how the modulus (%) operator works.
 		for (int i=0; i<length; i++)
 		{
 			int rotatedIndex = (i + offset) % length;
@@ -76,16 +111,17 @@ public class RotationCipher implements EncryptText
 		return output;
 	}
 	
-	protected static char[] rotate(char[] input)
+	/** Rotate the characters by a random amount.
+	 * 
+	 * @param input The characters to be rotated.
+	 * @return The rotated characters.
+	 */
+	protected char[] rotate(char[] input)
 	{
-		if ((input == null) || (input.length == 0))
+		if ((input == null) || (input.length < 2))
 			return input;
 		
-		int amount = 0;
-		while (amount == 0)
-		{
-			amount = RandomUtil.getInt(input.length);
-		}
+		int amount = randomUtil.getInt(input.length);
 		
 		return rotate(input, amount);	
 	}

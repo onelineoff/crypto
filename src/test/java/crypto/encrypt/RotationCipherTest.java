@@ -1,20 +1,20 @@
-package davidweiss.crypto.encrypt;
+package crypto.encrypt;
 
 import java.util.Arrays;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
-import davidweiss.crypto.util.PlainTextUtil;
-import davidweiss.crypto.util.RandomUtil;
+import crypto.util.PlainTextUtil;
 
 public class RotationCipherTest
 {
+	private PlainTextUtil plainTextUtil = new PlainTextUtil();
+	
 	@Test
 	public void testEncrypt()
 	{
-		String text = PlainTextUtil.getSomePlainText();
+		String text = plainTextUtil.getSomePlainText();
 		RotationCipher cipher = new RotationCipher();
 		String encryptedText = cipher.encrypt(text);
 		
@@ -83,7 +83,9 @@ public class RotationCipherTest
 	
 	private boolean testIsRotated(char[] input)
 	{
-		char[] output = RotationCipher.rotate(input);
+		RotationCipher rotationCipher = new RotationCipher();
+		
+		char[] output = rotationCipher.rotate(input);
 		if (input == null)
 			return (output == null);
 		else if (input.length == 0)

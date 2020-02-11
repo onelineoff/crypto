@@ -1,7 +1,8 @@
-package davidweiss.crypto.encrypt;
+package crypto.encrypt;
 
-import davidweiss.crypto.util.RandomUtil;
-import davidweiss.crypto.util.StringUtil;
+import crypto.dto.Alphabet;
+import crypto.util.RandomUtil;
+import crypto.util.StringUtil;
 
 /** Replace each letter with another.
  *  This is the classical substitution cipher.
@@ -11,20 +12,45 @@ import davidweiss.crypto.util.StringUtil;
  *  
  *  Preserve case, so if 'a' maps to 'l', 'A' will also map to 'L'.
  *  
- * @author dweiss
+ *  Note that this is <b>MUCH</b> harder to solve through brute force
+ *  than the Rotation Cipher, about 26! possibilities.
+ *  
+ *  @see <a href="https://en.wikipedia.org/wiki/Substitution_cipher">Substitution Cipher</a>
  *
  */
 public class SubstitutionCipher implements EncryptText
 {
-
+	private RandomUtil randomUtil;
+	private StringUtil stringUtil;
+	
+	public SubstitutionCipher()
+	{
+		randomUtil = new RandomUtil();
+		stringUtil = new StringUtil();
+	}
+	
 	@Override
 	public String encrypt(String plainText)
 	{
+		char[] lowercase = Alphabet.LOWER_CASE;
+		char[] lowerCaseScrambled = randomUtil.scramble(lowercase);
+		return encrypt(plainText, lowerCaseScrambled);
+	}
+	
+	/** Encrypt the text using the specified key.
+	 * This method uses the substitution cipher.
+	 * Note that if the mapping is reversed, e.g., if 'a' becomes 'g', then
+	 * calling the method with a mapping where 'g' becomes 'a' also decrypts.
+	 * 
+	 * @param plainText The text to be encrypted.
+	 * @param lowerCaseScrambled A mapping from each lower case letter to the substituted letter.
+	 * @return The encrypted text.
+	 */
+	public String encrypt(String plainText, char[] lowerCaseScrambled)
+	{	
 		// First, get the map of scrambled letters, both lower and upper case.
-		char[] lowercase = StringUtil.getLowerCaseLetters();
-		char[] lowerCaseScrambled = RandomUtil.scramble(lowercase);
-		char[] upperCaseScrambled = new String(lowerCaseScrambled).toUpperCase().toCharArray();
 		
+		char[] upperCaseScrambled = new String(lowerCaseScrambled).toUpperCase().toCharArray();		
 		
 		char[] plainTextArr = plainText.toCharArray();
 		int length = plainTextArr.length;
@@ -33,17 +59,18 @@ public class SubstitutionCipher implements EncryptText
 		int lowerStartIndex = (int) 'a';
 		int upperStartIndex = (int) 'A';
 		
+		// Perform the substitution from the plain text to the encrypted character array.
 		for (int i=0; i<length; i++)
 		{
 			char c = plainTextArr[i];
-			if (Character.isLowerCase(c))
+			if (stringUtil.isLowerCase(c))
 			{
-				int index = (int) c - lowerStartIndex;
+				int index = (int) (c - lowerStartIndex);
 				c = lowerCaseScrambled[index];
 			}
-			else if (Character.isUpperCase(c))
+			else if (stringUtil.isUpperCase(c))
 			{
-				int index = (int) c - upperStartIndex;
+				int index = (int) (c - upperStartIndex);
 				c = upperCaseScrambled[index];
 			}
 			// If the character isn't a letter, leave it unchanged.

@@ -1,4 +1,4 @@
-package davidweiss.crypto.util;
+package crypto.util;
 
 import java.util.Arrays;
 
@@ -38,7 +38,9 @@ public class RandomUtilTest
 	 */
 	private boolean testIsScrambled(char[] input)
 	{
-		char[] output = RandomUtil.scramble(input);
+		RandomUtil randomUtil = new RandomUtil();
+		
+		char[] output = randomUtil.scramble(input);
 		
 		if (input == null)
 			return (output == null);

@@ -1,21 +1,39 @@
-package davidweiss.crypto.decrypt;
+package crypto.decrypt;
 
 import org.junit.Test;
 
-import davidweiss.crypto.encrypt.RotationCipher;
-import davidweiss.crypto.util.PlainTextUtil;
+import crypto.encrypt.RotationCipher;
+import crypto.util.PlainTextUtil;
 
 public class RotationDecrypterTest
-{
+{	
 	@Test
 	public void testRotationDecryption()
 	{
-		String text = PlainTextUtil.getSomePlainText();
+		PlainTextUtil plainTextUtil = new PlainTextUtil();
+		
+		String text = plainTextUtil.getSomePlainText();
 		RotationCipher cipher = new RotationCipher();
 		String encrypted = cipher.encrypt(text);
 		
-		RotationDecrypter decrypter = new RotationDecrypter();
-		String decryptedText = decrypter.decryptText(encrypted);
+		RotationDecrypter decrypter = new RotationDecrypter(encrypted);
+		String decryptedText = decrypter.decryptText();
+		
+		System.out.println(text);
+		System.out.println(encrypted);
+		System.out.println(decryptedText);
+	}
+	
+	@Test
+	public void testKidsMessage()
+	{
+
+		String text = "Your mission, should you choose to accept it, is to decrypt this text";
+		RotationCipher cipher = new RotationCipher();
+		String encrypted = cipher.encrypt(text);
+		
+		RotationDecrypter decrypter = new RotationDecrypter(encrypted);
+		String decryptedText = decrypter.decryptText();
 		
 		System.out.println(text);
 		System.out.println(encrypted);
