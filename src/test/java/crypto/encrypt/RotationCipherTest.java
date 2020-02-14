@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 
+import crypto.dto.Alphabet;
 import crypto.util.PlainTextUtil;
 
 public class RotationCipherTest
@@ -120,5 +121,23 @@ public class RotationCipherTest
 			// We tried all the rotation amounts, but none of them worked.
 			return false;
 		}
+	}
+	
+	@Test
+	public void testRotateAlphabet()
+	{
+		String upperCase = Alphabet.UPPER_CASE_STRING;
+		RotationCipher cipher = new RotationCipher();
+		for (int i=0; i<=6; i++)
+		{
+			System.out.println(cipher.encrypt(upperCase, i));
+		}
+		
+		String msg = "Hi, this is the secret message";
+		for (int i=0; i<=6; i++)
+		{
+			System.out.println(cipher.encrypt(msg, i));
+		}
+		
 	}
 }

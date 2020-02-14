@@ -80,11 +80,13 @@ https://zxing.org/w/decode.jspx -  QR image decoder.
 
 # Issues
 1. More comments.  
-4. Additional unit tests.
-5. Lots of duplicate code. Clean up, and refactor.
-6. Examine Character vs char, array vs List.
-8. Move code from SubstitutionDecrypter to DictionaryUtil class.
-10. Some methods in StringUtil should be in DictionaryUtil.
+2. Additional unit tests.
+3. Lots of duplicate code. Clean up, and refactor.
+4. Examine Character vs char, array vs List.
+5. Move code from SubstitutionDecrypter to DictionaryUtil class.
+6. Some methods in StringUtil should be in DictionaryUtil.
+7. Slide deck
+
 
 # Caveats
 

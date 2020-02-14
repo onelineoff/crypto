@@ -7,7 +7,9 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+import crypto.dto.Alphabet;
 import crypto.util.PlainTextUtil;
+import crypto.util.RandomUtil;
 
 public class SubstitutionCipherTest
 {
@@ -68,4 +70,20 @@ public class SubstitutionCipherTest
 		}
 		return list;
 	}	
+	
+	@Test
+	public void testSubstitionWithKey()
+	{
+		RandomUtil randomUtil = new RandomUtil();
+		
+		String plainText = Alphabet.UPPER_CASE_STRING;
+		char[] lowerCaseScrambled = randomUtil.scramble(Alphabet.LOWER_CASE);
+		SubstitutionCipher sc = new SubstitutionCipher();
+		System.out.println(plainText);
+		System.out.println(sc.encrypt(plainText, lowerCaseScrambled));
+		
+		plainText = "Hi, I'm a test message.";
+		System.out.println(plainText);
+		System.out.println(sc.encrypt(plainText, lowerCaseScrambled));
+	}
 }

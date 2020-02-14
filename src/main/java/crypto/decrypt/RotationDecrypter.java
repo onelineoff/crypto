@@ -5,7 +5,6 @@ import crypto.dto.Alphabet;
 public class RotationDecrypter extends BaseTextDecrypter implements DecryptText
 {
 	private String encryptedText;
-	private Alphabet alphabet;
 	private char[] lowercase;
 	private char[] uppercase;
 	
@@ -13,7 +12,6 @@ public class RotationDecrypter extends BaseTextDecrypter implements DecryptText
 	{
 		super();
 		this.encryptedText = encryptedText;
-		alphabet = new Alphabet();
 		lowercase = Alphabet.LOWER_CASE;
 		uppercase = Alphabet.UPPER_CASE;
 	}
@@ -38,7 +36,7 @@ public class RotationDecrypter extends BaseTextDecrypter implements DecryptText
 		return plainText;
 	}
 	
-	private String rotate(String text, int rotation)
+	protected String rotate(String text, int rotation)
 	{
 		char[] charArray = text.toCharArray();
 		int lowerStartIndex = (int) 'a';
